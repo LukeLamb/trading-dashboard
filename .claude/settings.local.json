@@ -1,0 +1,15 @@
+{
+  "enableAllProjectMcpServers": true,
+  "enabledMcpjsonServers": [
+    "memory",
+    "context7",
+    "sequentialthinking",
+    "time",
+    "playwright"
+  ],
+  "permissions": {
+    "allow": [
+      "mcp__memory__create_entities"
+    ]
+  }
+}
