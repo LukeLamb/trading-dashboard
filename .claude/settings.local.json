@@ -2,8 +2,17 @@
   "permissions": {
     "allow": [
       "mcp__memory__create_entities",
-      "WebFetch(domain:github.com)"
-    ]
+      "WebFetch(domain:github.com)",
+      "mcp__memory__read_graph",
+      "Read(//c/Users/infob/Desktop/trading-dashboard/.claude/**)",
+      "Read(//c/Users/infob/Desktop/trading-dashboard/**)",
+      "mcp__ide__getDiagnostics",
+      "mcp__playwright__browser_snapshot",
+      "Bash(python:*)",
+      "mcp__memory__add_observations",
+      "Bash(git add:*)"
+    ],
+    "defaultMode": "bypassPermissions"
   },
   "enableAllProjectMcpServers": true,
   "enabledMcpjsonServers": [
