@@ -1,0 +1,91 @@
+# Trading Dashboard Main Configuration
+# This file contains the core dashboard settings and agent configurations
+
+dashboard:
+  title: "Trading Dashboard"
+  subtitle: "Central Control for Autonomous Trading System"
+  port: 3000
+  host: "localhost"
+  debug: false
+  refresh_interval: 5  # seconds
+
+  # UI Configuration
+  layout:
+    wide_mode: true
+    sidebar_state: "expanded"
+    theme: "light"  # light, dark, auto
+
+  # Performance Settings
+  performance:
+    cache_ttl: 300  # seconds
+    max_chart_points: 1000
+    auto_refresh: true
+
+# Agent Configurations
+agents:
+  market_data:
+    name: "Market Data Agent"
+    url: "http://localhost:8000"
+    timeout: 10
+    health_check_interval: 30
+    max_retries: 3
+    enabled: true
+
+  pattern_recognition:
+    name: "Pattern Recognition Agent"
+    url: "http://localhost:8001"
+    timeout: 15
+    health_check_interval: 60
+    max_retries: 3
+    enabled: false  # Will be enabled when agent is ready
+
+  risk_management:
+    name: "Risk Management Agent"
+    url: "http://localhost:8002"
+    timeout: 10
+    health_check_interval: 30
+    max_retries: 3
+    enabled: false  # Will be enabled when agent is ready
+
+  advisor:
+    name: "Advisor Agent"
+    url: "http://localhost:8003"
+    timeout: 20
+    health_check_interval: 45
+    max_retries: 3
+    enabled: false  # Will be enabled when agent is ready
+
+  backtest:
+    name: "Backtest Agent"
+    url: "http://localhost:8004"
+    timeout: 30
+    health_check_interval: 120
+    max_retries: 2
+    enabled: false  # Will be enabled when agent is ready
+
+# Logging Configuration
+logging:
+  level: "INFO"  # DEBUG, INFO, WARNING, ERROR, CRITICAL
+  format: "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
+  file_path: "logs/dashboard.log"
+  max_file_size: "10MB"
+  backup_count: 5
+  console_output: true
+
+# Data Quality Thresholds
+data_quality:
+  min_acceptable_grade: "C"  # A, B, C, D, F
+  alert_threshold: "D"
+  auto_switch_threshold: "F"
+
+# Alert Configuration
+alerts:
+  enabled: true
+  channels:
+    - "console"
+    # Future: email, slack, discord
+  severity_levels:
+    - "INFO"
+    - "WARNING"
+    - "ERROR"
+    - "CRITICAL"

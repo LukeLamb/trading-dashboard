@@ -1,0 +1,67 @@
+# Staging Environment Configuration
+# Configuration for staging/testing environment
+
+dashboard:
+  debug: false
+  refresh_interval: 5
+  host: "0.0.0.0"  # Allow external connections in staging
+  layout:
+    theme: "light"
+
+# Staging agent URLs - could be containerized or remote
+agents:
+  market_data:
+    url: "http://staging-market-data:8000"
+    timeout: 10
+    health_check_interval: 30
+    enabled: true
+
+  pattern_recognition:
+    url: "http://staging-pattern-recognition:8001"
+    timeout: 15
+    health_check_interval: 60
+    enabled: true  # Enable more agents in staging
+
+  risk_management:
+    url: "http://staging-risk-management:8002"
+    timeout: 10
+    health_check_interval: 30
+    enabled: true
+
+  advisor:
+    url: "http://staging-advisor:8003"
+    timeout: 20
+    health_check_interval: 45
+    enabled: false  # Keep advisor disabled in staging
+
+  backtest:
+    url: "http://staging-backtest:8004"
+    timeout: 30
+    health_check_interval: 120
+    enabled: true
+
+# Staging logging
+logging:
+  level: "INFO"
+  console_output: true
+  file_path: "logs/staging.log"
+  max_file_size: "50MB"
+  backup_count: 10
+
+# Standard data quality for staging
+data_quality:
+  min_acceptable_grade: "C"
+  alert_threshold: "D"
+  auto_switch_threshold: "F"
+
+# Staging performance settings
+performance:
+  cache_ttl: 300  # Standard cache timeout
+  max_chart_points: 1000
+  auto_refresh: true
+
+# Staging alerts
+alerts:
+  enabled: true
+  channels:
+    - "console"

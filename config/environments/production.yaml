@@ -1,0 +1,74 @@
+# Production Environment Configuration
+# Configuration for live production environment
+
+dashboard:
+  debug: false
+  refresh_interval: 10  # Slower refresh for production stability
+  host: "0.0.0.0"
+  port: 8501  # Standard Streamlit port for production
+  layout:
+    theme: "dark"  # Professional dark theme for production
+
+# Production agent URLs - production endpoints
+agents:
+  market_data:
+    url: "http://prod-market-data:8000"
+    timeout: 15  # Longer timeouts for production stability
+    health_check_interval: 60
+    max_retries: 5  # More retries in production
+    enabled: true
+
+  pattern_recognition:
+    url: "http://prod-pattern-recognition:8001"
+    timeout: 20
+    health_check_interval: 90
+    max_retries: 5
+    enabled: true
+
+  risk_management:
+    url: "http://prod-risk-management:8002"
+    timeout: 15
+    health_check_interval: 60
+    max_retries: 5
+    enabled: true
+
+  advisor:
+    url: "http://prod-advisor:8003"
+    timeout: 30
+    health_check_interval: 120
+    max_retries: 3
+    enabled: true
+
+  backtest:
+    url: "http://prod-backtest:8004"
+    timeout: 60
+    health_check_interval: 300
+    max_retries: 2
+    enabled: true
+
+# Production logging - optimized for performance and monitoring
+logging:
+  level: "WARNING"  # Less verbose logging in production
+  console_output: false  # Disable console output in production
+  file_path: "logs/production.log"
+  max_file_size: "100MB"
+  backup_count: 20
+
+# Strict data quality for production
+data_quality:
+  min_acceptable_grade: "B"  # Higher standards in production
+  alert_threshold: "C"
+  auto_switch_threshold: "D"
+
+# Production performance settings - optimized for stability
+performance:
+  cache_ttl: 600  # Longer cache for production
+  max_chart_points: 2000  # More data points for production analysis
+  auto_refresh: true
+
+# Production alerts - comprehensive monitoring
+alerts:
+  enabled: true
+  channels:
+    - "console"
+    # Future: email, slack for production alerts

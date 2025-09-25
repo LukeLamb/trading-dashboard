@@ -1,0 +1,64 @@
+# Development Environment Configuration
+# Overrides and additions for development environment
+
+dashboard:
+  debug: true
+  refresh_interval: 2  # Faster refresh for development
+  layout:
+    theme: "light"
+
+# Development agent URLs - typically localhost
+agents:
+  market_data:
+    url: "http://localhost:8000"
+    timeout: 5  # Shorter timeout for local development
+    health_check_interval: 10  # More frequent health checks
+    enabled: true
+
+  pattern_recognition:
+    url: "http://localhost:8001"
+    timeout: 5
+    health_check_interval: 15
+    enabled: false  # Start disabled in development
+
+  risk_management:
+    url: "http://localhost:8002"
+    timeout: 5
+    health_check_interval: 15
+    enabled: false
+
+  advisor:
+    url: "http://localhost:8003"
+    timeout: 10
+    health_check_interval: 20
+    enabled: false
+
+  backtest:
+    url: "http://localhost:8004"
+    timeout: 15
+    health_check_interval: 30
+    enabled: false
+
+# Development logging - more verbose
+logging:
+  level: "DEBUG"
+  console_output: true
+  file_path: "logs/development.log"
+
+# Relaxed data quality for development
+data_quality:
+  min_acceptable_grade: "D"
+  alert_threshold: "F"
+  auto_switch_threshold: "F"
+
+# Development-specific performance settings
+performance:
+  cache_ttl: 60  # Shorter cache for development
+  max_chart_points: 500  # Fewer points for faster rendering
+  auto_refresh: true
+
+# Development alerts
+alerts:
+  enabled: true
+  channels:
+    - "console"
