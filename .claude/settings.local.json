@@ -1,4 +1,10 @@
 {
+  "permissions": {
+    "allow": [
+      "mcp__memory__create_entities",
+      "WebFetch(domain:github.com)"
+    ]
+  },
   "enableAllProjectMcpServers": true,
   "enabledMcpjsonServers": [
     "memory",
@@ -6,10 +12,5 @@
     "sequentialthinking",
     "time",
     "playwright"
-  ],
-  "permissions": {
-    "allow": [
-      "mcp__memory__create_entities"
-    ]
-  }
+  ]
 }
