@@ -52,6 +52,25 @@ test_setup.bat
 python test_config_standalone.py
 ```
 
+### Running the Dashboard
+
+#### Quick Launch (Windows)
+```bash
+# Double-click or run from command line
+start_dashboard.bat
+```
+
+#### Cross-Platform Launch
+```bash
+# Using the Python launcher
+python run_dashboard.py
+
+# Or using Streamlit directly (after activating venv)
+streamlit run src/dashboard/main.py
+```
+
+The dashboard will be available at: **http://localhost:8501**
+
 ### Running Tests
 
 #### Option 1: Using pytest (recommended)
