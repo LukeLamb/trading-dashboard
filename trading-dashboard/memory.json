@@ -1,0 +1,10 @@
+[
+  {"type":"entity","name":"Luke","entityType":"user","observations":["Primary user of the system"]},
+  {"type":"entity","name":"Claude Code Project","entityType":"project","observations":["Development project using Claude Code template","Located at C:\\Users\\infob\\Desktop\\Claude","Configured with memory, context7, sequential thinking, time, and playwright MCP servers"]},
+  {"type":"entity","name":"Memory Testing Session","entityType":"concept","observations":["Testing session to demonstrate memory system capabilities","Started on 2025-09-22","Testing entity creation, relationships, and knowledge persistence","2025-09-22: User asked where memory data is stored","2025-09-22: Showed memory.json file location at c:\\Users\\infob\\Desktop\\Claude\\memory.json","2025-09-22: User requested ability to record chat and coding activities with timestamps","2025-09-22: Demonstrated that memory system can store conversations and code with timestamps"]},
+  {"type":"entity","name":"Chat Session 2025-09-22","entityType":"session","observations":["2025-09-22 14:15: Started memory system testing","2025-09-22 14:16: Demonstrated entity creation and relationships","2025-09-22 14:17: User asked about data storage location","2025-09-22 14:18: User requested chat/coding activity recording with timestamps"]},
+  {"type":"entity","name":"Memory System Development","entityType":"development","observations":["2025-09-22 14:15: Tested memory server functionality","2025-09-22 14:16: Created project entities and relationships","2025-09-22 14:18: Explored automatic activity logging patterns"]},
+  {"type":"relation","from":"Luke","to":"Claude Code Project","relationType":"owns"},
+  {"type":"relation","from":"Luke","to":"Memory Testing Session","relationType":"initiated"},
+  {"type":"relation","from":"Memory Testing Session","to":"Claude Code Project","relationType":"tests"}
+]
