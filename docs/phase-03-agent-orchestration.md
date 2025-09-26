@@ -1,27 +1,29 @@
-# Phase 3: Agent Orchestration
+# Phase 3: Advanced Agent Orchestration
 
-**Objective:** Implement agent lifecycle management and process control
+**Objective:** Implement advanced orchestration features building on Phase 2 Agent Manager
+
+**Prerequisites:** ✅ Phase 2 Agent Manager System completed with basic lifecycle management
 
 ## Phase 3 Implementation Todo List
 
-### Step 1: Agent Manager Implementation
+### Step 1: Advanced Orchestration Features
 
-- [ ] Create AgentManager class for process lifecycle
-  - [ ] Create `src/orchestrator/agent_manager.py`
-  - [ ] Implement AgentManager class
-  - [ ] Add agent registry and tracking
-  - [ ] Define agent states (stopped, starting, running, stopping, failed)
-- [ ] Implement start/stop/restart functionality for agents
-  - [ ] Add `start_agent(agent_name)` method
-  - [ ] Add `stop_agent(agent_name)` method
-  - [ ] Add `restart_agent(agent_name)` method
-  - [ ] Add `get_agent_status(agent_name)` method
-  - [ ] Implement process spawning and management
-- [ ] Add dependency management and startup sequencing
-  - [ ] Define agent dependency graph
+- [ ] Implement agent dependency management and startup sequencing
+  - [ ] Create `src/orchestrator/dependency_manager.py`
+  - [ ] Define agent dependency graph structure
   - [ ] Implement dependency resolution algorithm
   - [ ] Add sequential startup based on dependencies
-  - [ ] Create startup timeout handling
+  - [ ] Create startup timeout and retry handling
+- [ ] Add advanced process monitoring and resource tracking
+  - [ ] Enhance AgentManager with resource monitoring
+  - [ ] Implement CPU and memory usage tracking
+  - [ ] Track process uptime and restart counts
+  - [ ] Add process health scoring and analytics
+- [ ] Create orchestration policies and rules
+  - [ ] Implement restart policies (immediate, delayed, exponential backoff)
+  - [ ] Add maximum restart attempt limits
+  - [ ] Create resource usage thresholds and alerts
+  - [ ] Add agent priority and resource allocation
 
 ### Step 2: Process Management System
 

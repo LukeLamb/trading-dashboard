@@ -8,6 +8,10 @@ This module provides:
 - Configuration-based agent orchestration
 """
 
-from .agent_manager import AgentManager, AgentInfo, AgentStatus, get_agent_manager
+from .agent_manager import AgentManager, AgentInfo, AgentStatus, ResourceMetrics, get_agent_manager
+from .dependency_manager import DependencyManager, AgentDependency, StartupPolicy, RestartPolicy, StartupSequence
 
-__all__ = ['AgentManager', 'AgentInfo', 'AgentStatus', 'get_agent_manager']
+__all__ = [
+    'AgentManager', 'AgentInfo', 'AgentStatus', 'ResourceMetrics', 'get_agent_manager',
+    'DependencyManager', 'AgentDependency', 'StartupPolicy', 'RestartPolicy', 'StartupSequence'
+]

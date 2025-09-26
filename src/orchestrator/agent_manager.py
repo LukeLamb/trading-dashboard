@@ -13,7 +13,7 @@ import requests
 import psutil
 from pathlib import Path
 from typing import Dict, Optional, List, Tuple
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from enum import Enum
 import logging
 
@@ -31,6 +31,17 @@ class AgentStatus(Enum):
 
 
 @dataclass
+class ResourceMetrics:
+    """Agent resource usage metrics."""
+    cpu_percent: float = 0.0
+    memory_mb: float = 0.0
+    memory_percent: float = 0.0
+    uptime_seconds: float = 0.0
+    restart_count: int = 0
+    last_restart_time: Optional[float] = None
+
+
+@dataclass
 class AgentInfo:
     """Information about a managed agent."""
     name: str
@@ -40,10 +51,12 @@ class AgentInfo:
     status: AgentStatus = AgentStatus.STOPPED
     process: Optional[subprocess.Popen] = None
     pid: Optional[int] = None
-    start_command: List[str] = None
+    start_command: List[str] = field(default_factory=list)
     health_endpoint: str = "/health"
     last_health_check: Optional[float] = None
     error_message: Optional[str] = None
+    start_time: Optional[float] = None
+    resource_metrics: ResourceMetrics = field(default_factory=ResourceMetrics)
 
 
 class AgentManager:
@@ -154,6 +167,9 @@ class AgentManager:
             
             agent.process = process
             agent.pid = process.pid
+            agent.start_time = time.time()
+            agent.resource_metrics.restart_count += 1
+            agent.resource_metrics.last_restart_time = agent.start_time
             
             self.logger.info(f"{agent.name} started with PID {agent.pid}")
             
@@ -238,6 +254,7 @@ class AgentManager:
             agent.pid = None
             agent.status = AgentStatus.STOPPED
             agent.error_message = None
+            agent.start_time = None
             
             self.logger.info(f"{agent.name} stopped")
             return True
@@ -446,6 +463,166 @@ class AgentManager:
         await self.stop_all_agents()
         
         self.logger.info("Agent Manager cleanup complete")
+
+    async def update_resource_metrics(self, agent_name: str) -> bool:
+        """
+        Update resource metrics for a specific agent.
+
+        Args:
+            agent_name: Name of the agent to update
+
+        Returns:
+            True if metrics were updated successfully
+        """
+        if agent_name not in self.agents:
+            return False
+
+        agent = self.agents[agent_name]
+
+        if not agent.pid or agent.status != AgentStatus.RUNNING:
+            return False
+
+        try:
+            # Get process information
+            process = psutil.Process(agent.pid)
+
+            # CPU and memory usage
+            agent.resource_metrics.cpu_percent = process.cpu_percent(interval=0.1)
+            memory_info = process.memory_info()
+            agent.resource_metrics.memory_mb = memory_info.rss / (1024 * 1024)  # Convert to MB
+            agent.resource_metrics.memory_percent = process.memory_percent()
+
+            # Uptime calculation
+            if agent.start_time:
+                agent.resource_metrics.uptime_seconds = time.time() - agent.start_time
+
+            return True
+
+        except (psutil.NoSuchProcess, psutil.AccessDenied, psutil.ZombieProcess) as e:
+            self.logger.warning(f"Failed to get resource metrics for {agent.name}: {e}")
+            return False
+        except Exception as e:
+            self.logger.error(f"Error updating resource metrics for {agent.name}: {e}")
+            return False
+
+    async def update_all_resource_metrics(self) -> Dict[str, bool]:
+        """
+        Update resource metrics for all running agents.
+
+        Returns:
+            Dictionary mapping agent names to update success status
+        """
+        results = {}
+
+        for agent_name, agent in self.agents.items():
+            if agent.status == AgentStatus.RUNNING:
+                results[agent_name] = await self.update_resource_metrics(agent_name)
+            else:
+                results[agent_name] = True  # No update needed for stopped agents
+
+        return results
+
+    def get_resource_summary(self) -> Dict[str, Dict]:
+        """
+        Get resource usage summary for all agents.
+
+        Returns:
+            Dictionary with agent resource summaries
+        """
+        summary = {}
+
+        total_cpu = 0.0
+        total_memory = 0.0
+        running_agents = 0
+
+        for agent_name, agent in self.agents.items():
+            metrics = agent.resource_metrics
+
+            agent_summary = {
+                "status": agent.status.value,
+                "cpu_percent": metrics.cpu_percent,
+                "memory_mb": round(metrics.memory_mb, 2),
+                "memory_percent": round(metrics.memory_percent, 2),
+                "uptime_hours": round(metrics.uptime_seconds / 3600, 2) if metrics.uptime_seconds > 0 else 0,
+                "restart_count": metrics.restart_count,
+                "last_restart": metrics.last_restart_time
+            }
+
+            summary[agent_name] = agent_summary
+
+            if agent.status == AgentStatus.RUNNING:
+                total_cpu += metrics.cpu_percent
+                total_memory += metrics.memory_mb
+                running_agents += 1
+
+        # Add system totals
+        summary["_system_totals"] = {
+            "running_agents": running_agents,
+            "total_agents": len(self.agents),
+            "total_cpu_percent": round(total_cpu, 2),
+            "total_memory_mb": round(total_memory, 2)
+        }
+
+        return summary
+
+    def get_health_score(self, agent_name: str) -> Optional[float]:
+        """
+        Calculate health score for an agent based on various metrics.
+
+        Args:
+            agent_name: Name of the agent
+
+        Returns:
+            Health score from 0.0 (unhealthy) to 1.0 (perfect health)
+        """
+        if agent_name not in self.agents:
+            return None
+
+        agent = self.agents[agent_name]
+
+        if agent.status != AgentStatus.RUNNING:
+            return 0.0
+
+        score = 1.0
+
+        # Penalize high restart count
+        if agent.resource_metrics.restart_count > 0:
+            restart_penalty = min(agent.resource_metrics.restart_count * 0.1, 0.3)
+            score -= restart_penalty
+
+        # Penalize high CPU usage
+        if agent.resource_metrics.cpu_percent > 80:
+            cpu_penalty = (agent.resource_metrics.cpu_percent - 80) / 100
+            score -= cpu_penalty
+
+        # Penalize high memory usage
+        if agent.resource_metrics.memory_percent > 80:
+            memory_penalty = (agent.resource_metrics.memory_percent - 80) / 100
+            score -= memory_penalty
+
+        # Bonus for long uptime
+        if agent.resource_metrics.uptime_seconds > 3600:  # More than 1 hour
+            uptime_bonus = min(0.1, agent.resource_metrics.uptime_seconds / 86400 * 0.1)  # Max 0.1 bonus
+            score += uptime_bonus
+
+        # Health check penalty
+        if agent.last_health_check:
+            time_since_check = time.time() - agent.last_health_check
+            if time_since_check > 300:  # More than 5 minutes
+                score -= 0.2
+        else:
+            score -= 0.1  # Never had a health check
+
+        return max(0.0, min(1.0, score))
+
+    def get_all_health_scores(self) -> Dict[str, float]:
+        """Get health scores for all agents."""
+        scores = {}
+        for agent_name in self.agents:
+            score = self.get_health_score(agent_name)
+            if score is not None:
+                scores[agent_name] = round(score, 3)
+        return scores
 
 
 # Singleton instance for global access
