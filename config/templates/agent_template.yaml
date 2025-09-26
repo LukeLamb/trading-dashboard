@@ -1,0 +1,9 @@
+agent_template:
+  dependencies: '{{dependencies}}'
+  enabled: '{{enabled}}'
+  health_check_interval: 60
+  max_retries: 3
+  name: '{{agent_name}}'
+  priority: '{{priority}}'
+  timeout: 30
+  url: http://localhost:{{port}}/{{endpoint}}

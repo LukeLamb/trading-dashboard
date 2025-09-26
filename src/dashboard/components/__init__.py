@@ -17,11 +17,16 @@ from .advanced_control import (
     render_resource_monitoring
 )
 
+from .config_management import (
+    render_configuration_management
+)
+
 __all__ = [
     'render_agent_status_section',
     'render_agent_management_controls',
     'render_agent_card',
     'render_agent_status_grid',
     'render_bulk_operations',
-    'render_resource_monitoring'
+    'render_resource_monitoring',
+    'render_configuration_management'
 ]

@@ -1,0 +1,65 @@
+{
+  "timestamp": 1758890016.938942,
+  "version": "1.0.0",
+  "config": {
+    "dashboard": {
+      "title": "Trading Dashboard",
+      "subtitle": "Central Control for Autonomous Trading System",
+      "port": 3000,
+      "host": "localhost",
+      "debug": true,
+      "refresh_interval": 2
+    },
+    "agents": {
+      "market_data": {
+        "name": "Market Data Agent",
+        "url": "http://localhost:8000",
+        "timeout": 5,
+        "health_check_interval": 10,
+        "max_retries": 3,
+        "enabled": true
+      },
+      "pattern_recognition": {
+        "name": "Pattern Recognition Agent",
+        "url": "http://localhost:8001",
+        "timeout": 5,
+        "health_check_interval": 15,
+        "max_retries": 3,
+        "enabled": false
+      },
+      "risk_management": {
+        "name": "Risk Management Agent",
+        "url": "http://localhost:8002",
+        "timeout": 5,
+        "health_check_interval": 15,
+        "max_retries": 3,
+        "enabled": false
+      },
+      "advisor": {
+        "name": "Advisor Agent",
+        "url": "http://localhost:8003",
+        "timeout": 10,
+        "health_check_interval": 20,
+        "max_retries": 3,
+        "enabled": false
+      },
+      "backtest": {
+        "name": "Backtest Agent",
+        "url": "http://localhost:8004",
+        "timeout": 15,
+        "health_check_interval": 30,
+        "max_retries": 2,
+        "enabled": false
+      }
+    },
+    "logging": {
+      "level": "DEBUG",
+      "format": "%(asctime)s - %(name)s - %(levelname)s - %(message)s",
+      "file_path": "logs/development.log",
+      "max_file_size": "10MB",
+      "backup_count": 5,
+      "console_output": true
+    }
+  },
+  "history": []
+}

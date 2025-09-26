@@ -20,7 +20,8 @@ from src.dashboard.components import (
     render_agent_management_controls,
     render_agent_status_grid,
     render_bulk_operations,
-    render_resource_monitoring
+    render_resource_monitoring,
+    render_configuration_management
 )
 from src.orchestrator import get_agent_manager, AgentStatus
 
@@ -59,8 +60,8 @@ def show_agents():
     st.markdown("### 📋 Agent Details")
 
     # Tabs for different views
-    tab1, tab2, tab3, tab4, tab5 = st.tabs([
-        "🎮 Live Control", "🔍 Overview", "⚙️ Configuration", "📊 Legacy Status", "📈 Advanced Monitoring"
+    tab1, tab2, tab3, tab4, tab5, tab6 = st.tabs([
+        "🎮 Live Control", "🔍 Overview", "⚙️ Static Config", "📊 Legacy Status", "📈 Advanced Monitoring", "🔧 Config Management"
     ])
 
     with tab1:
@@ -81,6 +82,10 @@ def show_agents():
     with tab5:
         # Advanced monitoring and analytics
         render_advanced_monitoring()
+
+    with tab6:
+        # Dynamic configuration management
+        render_configuration_management()
 
     st.markdown("---")
 
