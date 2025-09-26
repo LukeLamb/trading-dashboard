@@ -27,6 +27,11 @@ from .charts import (
     render_trading_charts
 )
 
+from .realtime_charts import (
+    render_real_time_charts,
+    RealTimeChartsManager
+)
+
 __all__ = [
     'render_agent_status_section',
     'render_agent_management_controls',
@@ -37,5 +42,7 @@ __all__ = [
     'render_configuration_management',
     'TradingCharts',
     'TechnicalIndicators',
-    'render_trading_charts'
+    'render_trading_charts',
+    'render_real_time_charts',
+    'RealTimeChartsManager'
 ]

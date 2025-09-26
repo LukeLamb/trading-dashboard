@@ -14,6 +14,7 @@ project_root = Path(__file__).parent.parent.parent.parent
 sys.path.insert(0, str(project_root))
 
 from src.dashboard.components import render_trading_charts
+from src.dashboard.components.realtime_charts import render_real_time_charts
 
 
 def show_charts():
@@ -35,15 +36,26 @@ def show_charts():
         st.metric("Technical Indicators", "7", help="Available technical indicators")
 
     with col3:
-        st.metric("Real-time Updates", "Coming Soon", help="Live data streaming in Phase 4 Step 2")
+        st.metric("Real-time Updates", "✅ Available", help="Live data streaming - Phase 4 Step 2 Complete")
 
     with col4:
         st.metric("Data Quality", "A+", help="Simulated high-quality market data")
 
     st.markdown("---")
 
-    # Main charts interface
-    render_trading_charts()
+    # Chart type selection
+    chart_mode = st.selectbox(
+        "Chart Mode",
+        ["Real-time Streaming", "Historical Analysis"],
+        help="Choose between live data streaming or historical chart analysis"
+    )
+
+    if chart_mode == "Real-time Streaming":
+        # Real-time charts with live data streaming
+        render_real_time_charts()
+    else:
+        # Historical analysis charts
+        render_trading_charts()
 
     st.markdown("---")
 
