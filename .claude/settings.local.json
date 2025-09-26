@@ -1,18 +1,11 @@
 {
   "permissions": {
     "allow": [
-      "mcp__memory__create_entities",
-      "WebFetch(domain:github.com)",
-      "mcp__memory__read_graph",
-      "Read(//c/Users/infob/Desktop/trading-dashboard/.claude/**)",
-      "Read(//c/Users/infob/Desktop/trading-dashboard/**)",
-      "mcp__ide__getDiagnostics",
-      "mcp__playwright__browser_snapshot",
-      "Bash(python:*)",
-      "mcp__memory__add_observations",
-      "Bash(git add:*)"
+      "Bash(\"venv/Scripts/python.exe\" -c \"\nimport sys\nsys.path.append(''.'')\ntry:\n    from src.dashboard.main import configure_page, get_config_manager\n    print(''Testing dashboard imports...'')\n    config_manager = get_config_manager()\n    print(''[OK] Configuration manager loaded'')\n    dashboard_config = config_manager.get_dashboard_config()\n    print(f''[OK] Dashboard config: {dashboard_config.title}'')\n    \n    # Test page imports\n    from src.dashboard.pages import overview, agents\n    print(''[OK] Page modules imported successfully'')\n    \n    print(''[SUCCESS] All imports successful - dashboard ready to run'')\nexcept Exception as e:\n    print(f''[ERROR] Import failed: {e}'')\n    import traceback\n    traceback.print_exc()\n\")"
     ],
-    "defaultMode": "bypassPermissions"
+    "defaultMode": "bypassPermissions",
+    "deny": [],
+    "ask": []
   },
   "enableAllProjectMcpServers": true,
   "enabledMcpjsonServers": [
