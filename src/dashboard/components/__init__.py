@@ -21,6 +21,12 @@ from .config_management import (
     render_configuration_management
 )
 
+from .charts import (
+    TradingCharts,
+    TechnicalIndicators,
+    render_trading_charts
+)
+
 __all__ = [
     'render_agent_status_section',
     'render_agent_management_controls',
@@ -28,5 +34,8 @@ __all__ = [
     'render_agent_status_grid',
     'render_bulk_operations',
     'render_resource_monitoring',
-    'render_configuration_management'
+    'render_configuration_management',
+    'TradingCharts',
+    'TechnicalIndicators',
+    'render_trading_charts'
 ]
