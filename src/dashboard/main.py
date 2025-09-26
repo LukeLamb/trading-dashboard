@@ -16,7 +16,7 @@ sys.path.insert(0, str(project_root))
 
 # Import configuration management
 from src.utils.config import get_config_manager
-from src.dashboard.pages import overview, agents, charts, quality
+from src.dashboard.pages import overview, agents, charts, quality, analytics
 
 # Import agent management
 from src.orchestrator import get_agent_manager
@@ -295,8 +295,7 @@ def render_page_content():
         elif current_page == 'quality':
             quality.show_quality()
         elif current_page == 'analytics':
-            render_placeholder_page("Analytics Dashboard", "📈",
-                "Performance analytics and metrics will be implemented in Phase 3")
+            analytics.show_analytics()
         elif current_page == 'settings':
             render_placeholder_page("Settings", "⚙️",
                 "Configuration settings interface will be implemented in Phase 2")

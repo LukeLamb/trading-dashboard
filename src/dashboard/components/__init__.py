@@ -37,6 +37,11 @@ from .quality_dashboard import (
     QualityDashboard
 )
 
+from .metrics_dashboard import (
+    render_metrics_dashboard,
+    MetricsDashboard
+)
+
 __all__ = [
     'render_agent_status_section',
     'render_agent_management_controls',
@@ -51,5 +56,7 @@ __all__ = [
     'render_real_time_charts',
     'RealTimeChartsManager',
     'render_data_quality_dashboard',
-    'QualityDashboard'
+    'QualityDashboard',
+    'render_metrics_dashboard',
+    'MetricsDashboard'
 ]
