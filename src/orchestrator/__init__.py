@@ -10,8 +10,10 @@ This module provides:
 
 from .agent_manager import AgentManager, AgentInfo, AgentStatus, ResourceMetrics, get_agent_manager
 from .dependency_manager import DependencyManager, AgentDependency, StartupPolicy, RestartPolicy, StartupSequence
+from .resource_manager import ResourceManager, ResourceThreshold, ResourceAlert, ProcessMetrics, AlertLevel, ResourceType
 
 __all__ = [
     'AgentManager', 'AgentInfo', 'AgentStatus', 'ResourceMetrics', 'get_agent_manager',
-    'DependencyManager', 'AgentDependency', 'StartupPolicy', 'RestartPolicy', 'StartupSequence'
+    'DependencyManager', 'AgentDependency', 'StartupPolicy', 'RestartPolicy', 'StartupSequence',
+    'ResourceManager', 'ResourceThreshold', 'ResourceAlert', 'ProcessMetrics', 'AlertLevel', 'ResourceType'
 ]
