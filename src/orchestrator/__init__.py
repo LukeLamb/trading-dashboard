@@ -1,0 +1,13 @@
+"""
+Orchestrator module for managing trading agents and system coordination.
+
+This module provides:
+- Agent lifecycle management (start/stop/restart)
+- Health monitoring and auto-recovery
+- Process management and cleanup
+- Configuration-based agent orchestration
+"""
+
+from .agent_manager import AgentManager, AgentInfo, AgentStatus, get_agent_manager
+
+__all__ = ['AgentManager', 'AgentInfo', 'AgentStatus', 'get_agent_manager']

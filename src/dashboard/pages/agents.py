@@ -15,6 +15,7 @@ project_root = Path(__file__).parent.parent.parent.parent
 sys.path.insert(0, str(project_root))
 
 from src.utils.config import get_config_manager
+from src.dashboard.components import render_agent_status_section, render_agent_management_controls
 
 
 def show_agents():
@@ -51,7 +52,7 @@ def show_agents():
     st.markdown("### 📋 Agent Details")
 
     # Tabs for different views
-    tab1, tab2, tab3 = st.tabs(["🔍 Overview", "⚙️ Configuration", "📊 Status"])
+    tab1, tab2, tab3, tab4 = st.tabs(["🔍 Overview", "⚙️ Configuration", "📊 Status", "🤖 Live Management"])
 
     with tab1:
         show_agent_overview(agent_configs)
@@ -61,6 +62,12 @@ def show_agents():
 
     with tab3:
         show_agent_status(agent_configs)
+
+    with tab4:
+        # Live Agent Management with Agent Manager
+        render_agent_management_controls()
+        st.markdown("---")
+        render_agent_status_section()
 
     st.markdown("---")
 

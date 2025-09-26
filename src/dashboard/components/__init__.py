@@ -1,11 +1,18 @@
 """
-Dashboard components module.
+Dashboard UI Components
 
-This module contains reusable UI components for the Trading Dashboard,
-including headers, sidebars, charts, metrics, and other common elements.
+This module provides reusable Streamlit components for the trading dashboard,
+including agent status displays, metrics cards, and other UI elements.
 """
 
-# Future components will be imported here
-# from . import sidebar, header, charts, metrics
+from .agent_status import (
+    render_agent_status_section,
+    render_agent_management_controls,
+    render_agent_card
+)
 
-__all__ = []
+__all__ = [
+    'render_agent_status_section',
+    'render_agent_management_controls',
+    'render_agent_card'
+]

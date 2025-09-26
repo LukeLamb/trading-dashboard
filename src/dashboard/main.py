@@ -18,6 +18,10 @@ sys.path.insert(0, str(project_root))
 from src.utils.config import get_config_manager
 from src.dashboard.pages import overview, agents
 
+# Import agent management
+from src.orchestrator import get_agent_manager
+import asyncio
+
 # Configure logging
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
@@ -326,11 +330,48 @@ def render_footer():
     """, unsafe_allow_html=True)
 
 
+def initialize_agent_manager():
+    """Initialize the Agent Manager and auto-start enabled agents."""
+    if 'agent_manager' not in st.session_state:
+        with st.spinner("Initializing Agent Manager..."):
+            try:
+                st.session_state.agent_manager = get_agent_manager()
+                logger.info("Agent Manager initialized successfully")
+
+                # Auto-start enabled agents on first load
+                with st.spinner("Starting required services..."):
+                    results = asyncio.run(
+                        st.session_state.agent_manager.start_all_enabled_agents(wait_for_health=False)
+                    )
+
+                    # Display startup results in sidebar
+                    successful_agents = []
+                    failed_agents = []
+
+                    for agent_name, success in results.items():
+                        if success:
+                            successful_agents.append(agent_name)
+                        else:
+                            failed_agents.append(agent_name)
+
+                    if successful_agents:
+                        st.success(f"✅ Started: {', '.join(successful_agents)}")
+                    if failed_agents:
+                        st.error(f"❌ Failed: {', '.join(failed_agents)}")
+
+            except Exception as e:
+                st.error(f"Failed to initialize Agent Manager: {e}")
+                logger.error(f"Agent Manager initialization error: {e}")
+
+
 def main():
     """Main application entry point."""
     try:
         # Configure page
         configure_page()
+
+        # Initialize Agent Manager (only once)
+        initialize_agent_manager()
 
         # Load custom styling
         load_custom_css()
