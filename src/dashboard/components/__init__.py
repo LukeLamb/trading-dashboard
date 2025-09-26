@@ -32,6 +32,11 @@ from .realtime_charts import (
     RealTimeChartsManager
 )
 
+from .quality_dashboard import (
+    render_data_quality_dashboard,
+    QualityDashboard
+)
+
 __all__ = [
     'render_agent_status_section',
     'render_agent_management_controls',
@@ -44,5 +49,7 @@ __all__ = [
     'TechnicalIndicators',
     'render_trading_charts',
     'render_real_time_charts',
-    'RealTimeChartsManager'
+    'RealTimeChartsManager',
+    'render_data_quality_dashboard',
+    'QualityDashboard'
 ]

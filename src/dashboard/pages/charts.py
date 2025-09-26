@@ -15,6 +15,7 @@ sys.path.insert(0, str(project_root))
 
 from src.dashboard.components import render_trading_charts
 from src.dashboard.components.realtime_charts import render_real_time_charts
+from src.dashboard.components.data_quality import DataQualityManager
 
 
 def show_charts():
@@ -39,7 +40,19 @@ def show_charts():
         st.metric("Real-time Updates", "✅ Available", help="Live data streaming - Phase 4 Step 2 Complete")
 
     with col4:
-        st.metric("Data Quality", "A+", help="Simulated high-quality market data")
+        # Initialize quality manager for data quality display
+        if 'chart_quality_manager' not in st.session_state:
+            st.session_state.chart_quality_manager = DataQualityManager()
+
+        quality_manager = st.session_state.chart_quality_manager
+        overall_score = quality_manager.get_overall_quality_score()
+        overall_grade = quality_manager._score_to_grade(overall_score)
+
+        st.metric(
+            "Data Quality",
+            f"{overall_grade.value} ({overall_score:.1f})",
+            help=f"Overall data quality across {len(quality_manager.source_qualities)} sources"
+        )
 
     st.markdown("---")
 
@@ -56,6 +69,12 @@ def show_charts():
     else:
         # Historical analysis charts
         render_trading_charts()
+
+    st.markdown("---")
+
+    # Data quality indicators section
+    with st.expander("🎯 Data Quality Indicators", expanded=False):
+        _render_chart_quality_indicators(quality_manager)
 
     st.markdown("---")
 
@@ -142,6 +161,87 @@ def show_charts():
         - Combine multiple timeframes for comprehensive analysis
         - Save chart configurations using browser bookmarks (full save/load coming soon)
         """)
+
+
+def _render_chart_quality_indicators(quality_manager):
+    """Render quality indicators for chart data sources."""
+    st.markdown("### 📊 Current Data Source Quality")
+
+    if not quality_manager.source_qualities:
+        st.info("No quality data available")
+        return
+
+    # Quality overview metrics
+    col1, col2, col3 = st.columns(3)
+
+    with col1:
+        # Best source
+        best_source = max(quality_manager.source_qualities.values(), key=lambda x: x.score)
+        st.markdown(f"**🥇 Best Source:** {best_source.source_name}")
+        st.markdown(f"Grade: {best_source.grade.value} ({best_source.score:.1f})")
+
+    with col2:
+        # Active alerts
+        alert_count = len(quality_manager.active_alerts)
+        alert_color = "🔴" if alert_count > 0 else "🟢"
+        st.markdown(f"**🚨 Active Alerts:** {alert_color} {alert_count}")
+
+    with col3:
+        # Quick action
+        if st.button("📊 View Full Quality Dashboard"):
+            st.session_state.current_page = 'quality'
+            st.rerun()
+
+    # Quality sources table
+    st.markdown("### 📈 Source Performance")
+
+    quality_data = []
+    for quality in quality_manager.source_qualities.values():
+        quality_data.append({
+            "Source": quality.source_name,
+            "Grade": quality.grade.value,
+            "Score": f"{quality.score:.1f}",
+            "Response Time": f"{quality.response_time:.0f}ms",
+            "Uptime": f"{quality.uptime_percentage:.1f}%",
+            "Last Updated": quality.last_updated.strftime("%H:%M:%S")
+        })
+
+    if quality_data:
+        # Create a simple table display
+        for i, data in enumerate(quality_data):
+            with st.container():
+                quality_obj = list(quality_manager.source_qualities.values())[i]
+                grade_color = quality_obj.grade.color
+
+                st.markdown(
+                    f"<div style='display: flex; align-items: center; padding: 8px; margin: 4px 0; "
+                    f"border: 1px solid #E5E7EB; border-radius: 6px; background-color: #F9FAFB;'>"
+                    f"<div style='width: 24px; height: 24px; background-color: {grade_color}; "
+                    f"border-radius: 4px; margin-right: 12px; display: flex; align-items: center; "
+                    f"justify-content: center; color: white; font-weight: bold; font-size: 12px;'>"
+                    f"{data['Grade']}"
+                    f"</div>"
+                    f"<div style='flex: 1;'>"
+                    f"<div style='font-weight: 600;'>{data['Source']}</div>"
+                    f"<div style='font-size: 12px; color: #6B7280;'>"
+                    f"Score: {data['Score']} | Response: {data['Response Time']} | Uptime: {data['Uptime']}"
+                    f"</div>"
+                    f"</div>"
+                    f"<div style='font-size: 11px; color: #9CA3AF;'>{data['Last Updated']}</div>"
+                    f"</div>",
+                    unsafe_allow_html=True
+                )
+
+    # Quality recommendations
+    recommendations = quality_manager.get_quality_recommendations()
+    if recommendations:
+        st.markdown("### 💡 Quality Recommendations")
+        for rec in recommendations[:3]:  # Show top 3
+            severity_icons = {'high': '🔴', 'medium': '🟡', 'low': '🟢'}
+            icon = severity_icons.get(rec['severity'], 'ℹ️')
+
+            st.markdown(f"{icon} **{rec['title']}**")
+            st.caption(rec['message'])
 
 
 if __name__ == "__main__":
