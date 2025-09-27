@@ -42,6 +42,18 @@ from .metrics_dashboard import (
     MetricsDashboard
 )
 
+from .alerts import (
+    AlertManager,
+    AlertRule,
+    AlertInstance,
+    get_alert_manager
+)
+
+from .alert_dashboard import (
+    render_alert_dashboard,
+    AlertDashboard
+)
+
 __all__ = [
     'render_agent_status_section',
     'render_agent_management_controls',
@@ -58,5 +70,11 @@ __all__ = [
     'render_data_quality_dashboard',
     'QualityDashboard',
     'render_metrics_dashboard',
-    'MetricsDashboard'
+    'MetricsDashboard',
+    'AlertManager',
+    'AlertRule',
+    'AlertInstance',
+    'get_alert_manager',
+    'render_alert_dashboard',
+    'AlertDashboard'
 ]

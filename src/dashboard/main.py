@@ -16,7 +16,15 @@ sys.path.insert(0, str(project_root))
 
 # Import configuration management
 from src.utils.config import get_config_manager
-from src.dashboard.pages import overview, agents, charts, quality, analytics
+
+# Import pages and components
+try:
+    from .pages import overview, agents, charts, alerts, quality, analytics, error_handling
+    from .components.error_dashboard import render_error_status_indicator
+except ImportError:
+    # Fallback for direct execution
+    from src.dashboard.pages import overview, agents, charts, alerts, quality, analytics, error_handling
+    from src.dashboard.components.error_dashboard import render_error_status_indicator
 
 # Import agent management
 from src.orchestrator import get_agent_manager
@@ -236,8 +244,10 @@ def render_navigation():
         "🏠 Overview": "overview",
         "🤖 Agents": "agents",
         "📈 Charts": "charts",
+        "🚨 Alerts": "alerts",
         "🎯 Quality": "quality",
         "📊 Analytics": "analytics",
+        "🛠️ Error Handling": "error_handling",
         "⚙️ Settings": "settings"
     }
 
@@ -292,10 +302,14 @@ def render_page_content():
             agents.show_agents()
         elif current_page == 'charts':
             charts.show_charts()
+        elif current_page == 'alerts':
+            alerts.show_alerts()
         elif current_page == 'quality':
             quality.show_quality()
         elif current_page == 'analytics':
             analytics.show_analytics()
+        elif current_page == 'error_handling':
+            error_handling.show()
         elif current_page == 'settings':
             render_placeholder_page("Settings", "⚙️",
                 "Configuration settings interface will be implemented in Phase 2")

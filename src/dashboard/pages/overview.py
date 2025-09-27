@@ -15,11 +15,21 @@ project_root = Path(__file__).parent.parent.parent.parent
 sys.path.insert(0, str(project_root))
 
 from src.utils.config import get_config_manager
+from src.dashboard.components.alerts import get_alert_manager
+from src.dashboard.components.error_dashboard import render_error_status_indicator
 
 
 def show_overview():
     """Display the main overview page."""
     st.markdown("## 🏠 System Overview")
+    
+    # Show error status indicator
+    try:
+        has_issues = render_error_status_indicator()
+        if has_issues:
+            st.info("💡 Check the Error Handling page for detailed diagnostics and troubleshooting.")
+    except Exception:
+        pass  # Silently handle any errors in error status display
 
     # Get configuration
     config_manager = get_config_manager()
@@ -54,12 +64,78 @@ def show_overview():
         )
 
     with col4:
-        current_time = datetime.now().strftime("%H:%M:%S")
-        st.metric(
-            label="🕐 Current Time",
-            value=current_time,
-            delta="Live"
-        )
+        # Alert status
+        try:
+            alert_manager = get_alert_manager()
+            active_alerts = alert_manager.get_active_alerts()
+            alert_count = len(active_alerts)
+
+            # Check for high severity alerts
+            critical_alerts = sum(1 for alert in active_alerts
+                                if alert.severity.value in ['critical', 'emergency'])
+
+            if critical_alerts > 0:
+                delta = f"{critical_alerts} critical"
+                delta_color = "inverse"
+            elif alert_count > 0:
+                delta = f"{alert_count} active"
+                delta_color = "normal"
+            else:
+                delta = "All clear"
+                delta_color = "normal"
+
+            st.metric(
+                label="🚨 Alerts",
+                value=str(alert_count),
+                delta=delta
+            )
+        except Exception:
+            st.metric(
+                label="🚨 Alerts",
+                value="N/A",
+                delta="Not configured"
+            )
+
+    st.markdown("---")
+
+    # Active Alerts Section (if any)
+    try:
+        alert_manager = get_alert_manager()
+        active_alerts = alert_manager.get_active_alerts()
+
+        if active_alerts:
+            st.markdown("### 🚨 Active Alerts")
+
+            # Show only critical/emergency alerts in overview
+            high_priority_alerts = [alert for alert in active_alerts
+                                  if alert.severity.value in ['critical', 'emergency', 'high']]
+
+            if high_priority_alerts:
+                for alert in high_priority_alerts[:3]:  # Show max 3 alerts
+                    severity_emoji = {
+                        'emergency': '🚨',
+                        'critical': '🔴',
+                        'high': '🟠'
+                    }.get(alert.severity.value, '⚠️')
+
+                    st.warning(
+                        f"{severity_emoji} **{alert.rule_name}**: {alert.message} "
+                        f"({alert.triggered_at.strftime('%H:%M:%S')})"
+                    )
+
+                if len(active_alerts) > 3:
+                    st.info(f"+ {len(active_alerts) - 3} more alerts. Visit the Alerts page for details.")
+
+                # Quick link to alerts page
+                if st.button("🚨 Go to Alerts Page", type="secondary"):
+                    st.session_state.current_page = 'alerts'
+                    st.rerun()
+            else:
+                st.info(f"{len(active_alerts)} low-priority alerts active. Visit the Alerts page for details.")
+
+    except Exception as e:
+        # Don't show error in overview, just skip alerts section
+        pass
 
     st.markdown("---")
 
