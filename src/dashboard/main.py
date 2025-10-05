@@ -19,11 +19,27 @@ from src.utils.config import get_config_manager
 
 # Import pages and components
 try:
-    from .pages import overview, agents, charts, alerts, quality, analytics, error_handling
+    from .pages import (
+        overview,
+        agents,
+        charts,
+        alerts,
+        quality,
+        analytics,
+        error_handling,
+    )
     from .components.error_dashboard import render_error_status_indicator
 except ImportError:
     # Fallback for direct execution
-    from src.dashboard.pages import overview, agents, charts, alerts, quality, analytics, error_handling
+    from src.dashboard.pages import (
+        overview,
+        agents,
+        charts,
+        alerts,
+        quality,
+        analytics,
+        error_handling,
+    )
     from src.dashboard.components.error_dashboard import render_error_status_indicator
 
 # Import agent management
@@ -46,9 +62,9 @@ def configure_page():
         layout="wide",
         initial_sidebar_state="expanded",
         menu_items={
-            'Get Help': 'https://github.com/user/trading-dashboard',
-            'Report a bug': "https://github.com/user/trading-dashboard/issues",
-            'About': f"""
+            "Get Help": "https://github.com/user/trading-dashboard",
+            "Report a bug": "https://github.com/user/trading-dashboard/issues",
+            "About": f"""
             # {dashboard_config.title}
 
             {dashboard_config.subtitle}
@@ -62,14 +78,15 @@ def configure_page():
             - Risk Management Agent
             - Advisor Agent
             - Backtest Agent
-            """
-        }
+            """,
+        },
     )
 
 
 def load_custom_css():
     """Load custom CSS for professional styling."""
-    st.markdown("""
+    st.markdown(
+        """
     <style>
     /* Main container styling */
     .main .block-container {
@@ -217,7 +234,9 @@ def load_custom_css():
         box-shadow: 0 4px 12px rgba(59, 130, 246, 0.4);
     }
     </style>
-    """, unsafe_allow_html=True)
+    """,
+        unsafe_allow_html=True,
+    )
 
 
 def render_header():
@@ -226,13 +245,16 @@ def render_header():
     dashboard_config = config_manager.get_dashboard_config()
     environment = config_manager.get_environment()
 
-    st.markdown(f"""
+    st.markdown(
+        f"""
     <div class="dashboard-header">
         <h1>{dashboard_config.title}</h1>
         <p>{dashboard_config.subtitle}</p>
         <p><strong>Environment:</strong> {environment.title()} | <strong>Auto-refresh:</strong> {dashboard_config.refresh_interval}s</p>
     </div>
-    """, unsafe_allow_html=True)
+    """,
+        unsafe_allow_html=True,
+    )
 
 
 def render_navigation():
@@ -248,16 +270,18 @@ def render_navigation():
         "🎯 Quality": "quality",
         "📊 Analytics": "analytics",
         "🛠️ Error Handling": "error_handling",
-        "⚙️ Settings": "settings"
+        "⚙️ Settings": "settings",
     }
 
     # Get current page from session state
-    if 'current_page' not in st.session_state:
-        st.session_state.current_page = 'overview'
+    if "current_page" not in st.session_state:
+        st.session_state.current_page = "overview"
 
     # Create navigation buttons
     for page_name, page_key in pages.items():
-        if st.sidebar.button(page_name, key=f"nav_{page_key}", use_container_width=True):
+        if st.sidebar.button(
+            page_name, key=f"nav_{page_key}", use_container_width=True
+        ):
             st.session_state.current_page = page_key
 
     # Add divider
@@ -273,7 +297,8 @@ def render_navigation():
     enabled_agents = sum(1 for config in agent_configs.values() if config.enabled)
     total_agents = len(agent_configs)
 
-    st.sidebar.markdown(f"""
+    st.sidebar.markdown(
+        f"""
     <div style="font-size: 0.9rem;">
         <div>
             <span class="status-indicator status-healthy"></span>
@@ -288,31 +313,36 @@ def render_navigation():
             <strong>Environment:</strong> {config_manager.get_environment().title()}
         </div>
     </div>
-    """, unsafe_allow_html=True)
+    """,
+        unsafe_allow_html=True,
+    )
 
 
 def render_page_content():
     """Render the main page content based on current selection."""
-    current_page = st.session_state.get('current_page', 'overview')
+    current_page = st.session_state.get("current_page", "overview")
 
     try:
-        if current_page == 'overview':
+        if current_page == "overview":
             overview.show_overview()
-        elif current_page == 'agents':
+        elif current_page == "agents":
             agents.show_agents()
-        elif current_page == 'charts':
+        elif current_page == "charts":
             charts.show_charts()
-        elif current_page == 'alerts':
+        elif current_page == "alerts":
             alerts.show_alerts()
-        elif current_page == 'quality':
+        elif current_page == "quality":
             quality.show_quality()
-        elif current_page == 'analytics':
+        elif current_page == "analytics":
             analytics.show_analytics()
-        elif current_page == 'error_handling':
+        elif current_page == "error_handling":
             error_handling.show()
-        elif current_page == 'settings':
-            render_placeholder_page("Settings", "⚙️",
-                "Configuration settings interface will be implemented in Phase 2")
+        elif current_page == "settings":
+            render_placeholder_page(
+                "Settings",
+                "⚙️",
+                "Configuration settings interface will be implemented in Phase 2",
+            )
         else:
             overview.show_overview()
 
@@ -323,13 +353,16 @@ def render_page_content():
 
 def render_placeholder_page(title: str, icon: str, description: str):
     """Render a placeholder page for future implementation."""
-    st.markdown(f"""
+    st.markdown(
+        f"""
     <div class="alert alert-info">
         <h3>{icon} {title}</h3>
         <p>{description}</p>
         <p><strong>Status:</strong> Planned for future phases</p>
     </div>
-    """, unsafe_allow_html=True)
+    """,
+        unsafe_allow_html=True,
+    )
 
 
 def render_footer():
@@ -337,17 +370,20 @@ def render_footer():
     config_manager = get_config_manager()
     environment = config_manager.get_environment()
 
-    st.markdown(f"""
+    st.markdown(
+        f"""
     <div class="dashboard-footer">
         <p>Trading Dashboard v1.0.0 | Environment: {environment.title()} |
         Built with Streamlit | 🤖 Generated with Claude Code</p>
     </div>
-    """, unsafe_allow_html=True)
+    """,
+        unsafe_allow_html=True,
+    )
 
 
 def initialize_agent_manager():
     """Initialize the Agent Manager and auto-start enabled agents."""
-    if 'agent_manager' not in st.session_state:
+    if "agent_manager" not in st.session_state:
         with st.spinner("Initializing Agent Manager..."):
             try:
                 st.session_state.agent_manager = get_agent_manager()
@@ -356,7 +392,9 @@ def initialize_agent_manager():
                 # Auto-start enabled agents on first load
                 with st.spinner("Starting required services..."):
                     results = asyncio.run(
-                        st.session_state.agent_manager.start_all_enabled_agents(wait_for_health=False)
+                        st.session_state.agent_manager.start_all_enabled_agents(
+                            wait_for_health=False
+                        )
                     )
 
                     # Display startup results in sidebar

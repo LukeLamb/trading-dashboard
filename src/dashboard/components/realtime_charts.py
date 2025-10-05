@@ -29,7 +29,7 @@ from src.dashboard.components.performance_optimizer import (
     PerformanceOptimizer, PerformanceConfig, TimeframeResolution
 )
 from src.dashboard.components.charts import TradingCharts, TechnicalIndicators
-from src.clients.market_data_client import MarketDataClient
+from src.api_client.market_data import MarketDataClient
 from src.orchestrator import get_agent_manager
 
 
