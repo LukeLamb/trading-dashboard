@@ -102,4 +102,4 @@ docker-compose.override.yml
 # System files
 *.pid
 *.seed
-*.pid.lock
+*.pid.lockmarket_data_agent/
