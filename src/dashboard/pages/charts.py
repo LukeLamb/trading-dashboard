@@ -244,5 +244,5 @@ def _render_chart_quality_indicators(quality_manager):
             st.caption(rec['message'])
 
 
-if __name__ == "__main__":
+if __name__ == "__main__" or True:
     show_charts()

@@ -102,9 +102,8 @@ class PerformanceOptimizer:
         self.is_running = False
         self._lock = threading.Lock()
 
-        # Start background monitoring if enabled
-        if self.config.background_processing:
-            asyncio.create_task(self.start_background_processing())
+        # Note: Background processing must be started manually with start_background_processing()
+        # We can't auto-start here because there's no event loop in Streamlit at init time
 
     async def start_background_processing(self):
         """Start background performance optimization tasks."""

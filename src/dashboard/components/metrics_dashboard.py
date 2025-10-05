@@ -204,12 +204,12 @@ class MetricsDashboard:
         with chart_col1:
             # CPU and Memory chart
             cpu_memory_chart = self.metrics_manager.create_cpu_memory_chart(hours=24)
-            st.plotly_chart(cpu_memory_chart, use_container_width=True)
+            st.plotly_chart(cpu_memory_chart, use_container_width=True, key="overview_cpu_memory")
 
         with chart_col2:
             # Network activity chart
             network_chart = self.metrics_manager.create_network_chart(hours=24)
-            st.plotly_chart(network_chart, use_container_width=True)
+            st.plotly_chart(network_chart, use_container_width=True, key="overview_network")
 
     def _render_business_metrics(self):
         """Render business metrics overview."""
@@ -278,9 +278,9 @@ class MetricsDashboard:
         """Render detailed CPU and memory chart."""
         st.markdown("### 🖥️ CPU & Memory Usage")
 
-        time_range = st.selectbox("Time Range", [6, 12, 24, 48], index=2, help="Hours of data to display")
+        time_range = st.selectbox("Time Range", [6, 12, 24, 48], index=2, help="Hours of data to display", key="cpu_memory_time_range")
         cpu_memory_chart = self.metrics_manager.create_cpu_memory_chart(hours=time_range)
-        st.plotly_chart(cpu_memory_chart, use_container_width=True)
+        st.plotly_chart(cpu_memory_chart, use_container_width=True, key="cpu_memory_chart")
 
     def _render_network_chart(self):
         """Render network activity chart."""
@@ -288,7 +288,7 @@ class MetricsDashboard:
 
         time_range = st.selectbox("Network Time Range", [6, 12, 24, 48], index=2, key="network_time")
         network_chart = self.metrics_manager.create_network_chart(hours=time_range)
-        st.plotly_chart(network_chart, use_container_width=True)
+        st.plotly_chart(network_chart, use_container_width=True, key="network_chart")
 
     def _render_system_alerts(self):
         """Render system alerts and warnings."""
@@ -366,7 +366,7 @@ class MetricsDashboard:
 
         time_range = st.selectbox("Portfolio Time Range", [7, 14, 30, 60], index=2, key="portfolio_time")
         portfolio_chart = self.metrics_manager.create_portfolio_chart(days=time_range)
-        st.plotly_chart(portfolio_chart, use_container_width=True)
+        st.plotly_chart(portfolio_chart, use_container_width=True, key="portfolio_chart")
 
     def _render_pnl_chart(self):
         """Render P&L chart."""
@@ -374,7 +374,7 @@ class MetricsDashboard:
 
         time_range = st.selectbox("P&L Time Range", [7, 14, 30, 60], index=2, key="pnl_time")
         pnl_chart = self.metrics_manager.create_pnl_chart(days=time_range)
-        st.plotly_chart(pnl_chart, use_container_width=True)
+        st.plotly_chart(pnl_chart, use_container_width=True, key="pnl_chart")
 
     def _render_risk_metrics(self):
         """Render risk management metrics."""

@@ -295,8 +295,8 @@ def render_advanced_monitoring():
     with col1:
         st.markdown("##### 🏗️ Architecture Status")
         total_agents = len(agent_manager.agents)
-        running_count = sum(1 for name in agent_manager.agents
-                          if agent_manager.get_agent_status(name) == AgentStatus.RUNNING)
+        running_count = sum(1 for name, info in agent_manager.agents.items()
+                          if info.status == AgentStatus.RUNNING)
 
         st.metric("Total Agents", total_agents)
         st.metric("Running Agents", running_count, delta=f"{running_count}/{total_agents}")
@@ -336,14 +336,14 @@ def render_advanced_monitoring():
     if agent_manager.agents:
         health_data = []
         for agent_name, agent_info in agent_manager.agents.items():
-            status = agent_manager.get_agent_status(agent_name)
+            status = agent_info.status
             health_score = agent_manager.get_health_score(agent_name)
             metrics = agent_manager.get_resource_metrics(agent_name)
 
             health_data.append({
                 "Agent": agent_info.name,
                 "Status": status.value.title(),
-                "Health Score": f"{health_score:.1f}%" if health_score else "N/A",
+                "Health Score": f"{health_score*100:.1f}%" if health_score else "N/A",
                 "CPU %": f"{metrics.cpu_percent:.1f}" if metrics else "N/A",
                 "Memory MB": f"{metrics.memory_mb:.0f}" if metrics else "N/A",
                 "Uptime": f"{metrics.uptime_seconds/3600:.1f}h" if metrics and metrics.uptime_seconds > 0 else "N/A",
@@ -430,10 +430,11 @@ def render_advanced_monitoring():
         }
 
         for agent_name, agent_info in agent_manager.agents.items():
+            metrics = agent_manager.get_resource_metrics(agent_name)
             state_data["agents"][agent_name] = {
-                "status": agent_manager.get_agent_status(agent_name).value,
+                "status": agent_info.status.value,
                 "health_score": agent_manager.get_health_score(agent_name),
-                "metrics": agent_manager.get_resource_metrics(agent_name).__dict__ if agent_manager.get_resource_metrics(agent_name) else None
+                "metrics": metrics.__dict__ if metrics else None
             }
 
         # Convert to JSON for display
@@ -446,3 +447,6 @@ def render_advanced_monitoring():
             mime="application/json"
         )
         st.success("✅ System state exported successfully!")
+# Execute page content
+if __name__ == '__main__' or True:
+    show_agents()

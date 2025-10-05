@@ -13,14 +13,13 @@ from datetime import datetime, timedelta
 from typing import Dict, List, Any, Optional
 import asyncio
 
-from ..utils.error_handling import (
+from src.utils.error_handling import (
     get_error_handler,
     ErrorSeverity,
     ErrorCategory,
     RecoveryStrategy,
-    DiagnosticStatus,
 )
-from ..utils.diagnostics import get_diagnostics_manager
+from src.utils.diagnostics import get_diagnostics_manager, DiagnosticStatus
 
 
 def render_error_dashboard():

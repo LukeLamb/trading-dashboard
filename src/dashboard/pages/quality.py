@@ -157,5 +157,5 @@ def show_quality():
     """)
 
 
-if __name__ == "__main__":
+if __name__ == "__main__" or True:
     show_quality()

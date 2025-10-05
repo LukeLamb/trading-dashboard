@@ -84,159 +84,22 @@ def configure_page():
 
 
 def load_custom_css():
-    """Load custom CSS for professional styling."""
-    st.markdown(
-        """
-    <style>
-    /* Main container styling */
-    .main .block-container {
-        padding-top: 2rem;
-        padding-bottom: 2rem;
-    }
-
-    /* Header styling */
-    .dashboard-header {
-        background: linear-gradient(90deg, #1f2937 0%, #374151 100%);
-        padding: 1.5rem;
-        border-radius: 0.5rem;
-        margin-bottom: 2rem;
-        color: white;
-        text-align: center;
-    }
-
-    .dashboard-header h1 {
-        color: white !important;
-        margin-bottom: 0.5rem;
-    }
-
-    .dashboard-header p {
-        color: #d1d5db;
-        margin-bottom: 0;
-    }
-
-    /* Status indicators */
-    .status-indicator {
-        display: inline-block;
-        width: 12px;
-        height: 12px;
-        border-radius: 50%;
-        margin-right: 8px;
-    }
-
-    .status-healthy {
-        background-color: #10b981;
-    }
-
-    .status-warning {
-        background-color: #f59e0b;
-    }
-
-    .status-error {
-        background-color: #ef4444;
-    }
-
-    .status-disabled {
-        background-color: #6b7280;
-    }
-
-    /* Card styling */
-    .metric-card {
-        background: white;
-        padding: 1.5rem;
-        border-radius: 0.5rem;
-        border: 1px solid #e5e7eb;
-        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-        margin-bottom: 1rem;
-    }
-
-    /* Sidebar styling */
-    .sidebar .sidebar-content {
-        background-color: #f9fafb;
-    }
-
-    /* Navigation styling */
-    .nav-link {
-        display: block;
-        padding: 0.75rem 1rem;
-        margin: 0.25rem 0;
-        background: #f3f4f6;
-        border-radius: 0.375rem;
-        text-decoration: none;
-        color: #374151;
-        transition: all 0.2s;
-    }
-
-    .nav-link:hover {
-        background: #e5e7eb;
-        color: #111827;
-    }
-
-    .nav-link.active {
-        background: #3b82f6;
-        color: white;
-    }
-
-    /* Alert styling */
-    .alert {
-        padding: 1rem;
-        border-radius: 0.375rem;
-        margin: 1rem 0;
-    }
-
-    .alert-info {
-        background-color: #dbeafe;
-        border: 1px solid #93c5fd;
-        color: #1e40af;
-    }
-
-    .alert-warning {
-        background-color: #fef3c7;
-        border: 1px solid #fbbf24;
-        color: #92400e;
-    }
-
-    .alert-error {
-        background-color: #fee2e2;
-        border: 1px solid #fca5a5;
-        color: #dc2626;
-    }
-
-    /* Footer styling */
-    .dashboard-footer {
-        text-align: center;
-        color: #6b7280;
-        font-size: 0.875rem;
-        padding: 2rem 0 1rem 0;
-        border-top: 1px solid #e5e7eb;
-        margin-top: 3rem;
-    }
-
-    /* Hide Streamlit default elements */
-    #MainMenu {visibility: hidden;}
-    .stDeployButton {display: none;}
-    footer {visibility: hidden;}
-    .stApp > header {visibility: hidden;}
-
-    /* Custom button styling */
-    .stButton > button {
-        background-color: #3b82f6;
-        color: white;
-        border: none;
-        border-radius: 0.375rem;
-        padding: 0.5rem 1rem;
-        font-weight: 500;
-        transition: all 0.2s;
-    }
-
-    .stButton > button:hover {
-        background-color: #2563eb;
-        transform: translateY(-1px);
-        box-shadow: 0 4px 12px rgba(59, 130, 246, 0.4);
-    }
-    </style>
-    """,
-        unsafe_allow_html=True,
-    )
+    """Load custom CSS for professional styling - matches LocalAI Finance website."""
+    try:
+        from .utils.theme_loader import load_custom_css as load_theme
+        success = load_theme()
+        if success:
+            logger.info("✅ Custom theme loaded successfully")
+        else:
+            logger.warning("⚠️ Custom theme failed to load, using defaults")
+    except ImportError:
+        # Fallback for direct execution
+        from src.dashboard.utils.theme_loader import load_custom_css as load_theme
+        success = load_theme()
+        if success:
+            logger.info("✅ Custom theme loaded successfully")
+        else:
+            logger.warning("⚠️ Custom theme failed to load, using defaults")
 
 
 def render_header():
@@ -258,31 +121,17 @@ def render_header():
 
 
 def render_navigation():
-    """Render the navigation sidebar."""
-    st.sidebar.title("📊 Navigation")
-
-    # Navigation pages
-    pages = {
-        "🏠 Overview": "overview",
-        "🤖 Agents": "agents",
-        "📈 Charts": "charts",
-        "🚨 Alerts": "alerts",
-        "🎯 Quality": "quality",
-        "📊 Analytics": "analytics",
-        "🛠️ Error Handling": "error_handling",
-        "⚙️ Settings": "settings",
-    }
-
-    # Get current page from session state
-    if "current_page" not in st.session_state:
-        st.session_state.current_page = "overview"
-
-    # Create navigation buttons
-    for page_name, page_key in pages.items():
-        if st.sidebar.button(
-            page_name, key=f"nav_{page_key}", use_container_width=True
-        ):
-            st.session_state.current_page = page_key
+    """Render the navigation sidebar with system status only."""
+    # Add branding at top
+    st.sidebar.markdown(
+        """
+        <div style="text-align: center; padding: 1rem 0;">
+            <h2 class="gradient-text">LocalAI Finance</h2>
+            <p style="color: var(--text-secondary); font-size: 0.875rem;">Trading Dashboard</p>
+        </div>
+        """,
+        unsafe_allow_html=True,
+    )
 
     # Add divider
     st.sidebar.markdown("---")
@@ -319,36 +168,10 @@ def render_navigation():
 
 
 def render_page_content():
-    """Render the main page content based on current selection."""
-    current_page = st.session_state.get("current_page", "overview")
-
-    try:
-        if current_page == "overview":
-            overview.show_overview()
-        elif current_page == "agents":
-            agents.show_agents()
-        elif current_page == "charts":
-            charts.show_charts()
-        elif current_page == "alerts":
-            alerts.show_alerts()
-        elif current_page == "quality":
-            quality.show_quality()
-        elif current_page == "analytics":
-            analytics.show_analytics()
-        elif current_page == "error_handling":
-            error_handling.show()
-        elif current_page == "settings":
-            render_placeholder_page(
-                "Settings",
-                "⚙️",
-                "Configuration settings interface will be implemented in Phase 2",
-            )
-        else:
-            overview.show_overview()
-
-    except Exception as e:
-        st.error(f"Error loading page '{current_page}': {str(e)}")
-        logger.error(f"Page loading error: {e}")
+    """Render the main page content - now handled by Streamlit's page router."""
+    # Streamlit automatically handles page routing with the pages/ folder
+    # This function is kept for compatibility but pages are now auto-routed
+    pass
 
 
 def render_placeholder_page(title: str, icon: str, description: str):
@@ -429,19 +252,17 @@ def main():
         # Load custom styling
         load_custom_css()
 
+        # Render sidebar navigation and status
+        render_navigation()
+
         # Render header
         render_header()
 
-        # Create two-column layout
-        with st.container():
-            # Render navigation sidebar
-            render_navigation()
+        # Main content is now handled by Streamlit's page router
+        # Each page in pages/ folder renders itself
 
-            # Render main content
-            render_page_content()
-
-            # Render footer
-            render_footer()
+        # Render footer
+        render_footer()
 
     except Exception as e:
         st.error(f"Application error: {str(e)}")

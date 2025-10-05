@@ -413,6 +413,6 @@ def _render_integration_status():
         """)
 
 
-if __name__ == "__main__":
+if __name__ == "__main__" or True:
     # For testing
     show_alerts()

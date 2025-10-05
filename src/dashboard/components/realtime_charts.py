@@ -433,19 +433,19 @@ class RealTimeChartsManager:
 
         # Use existing TradingCharts for demo
         trading_charts = TradingCharts()
-        demo_data = trading_charts.generate_sample_data(
-            symbols=self.current_symbols,
-            days=30
-        )
 
-        # Render demo candlestick chart
+        # Render demo candlestick chart for each symbol
         for symbol in self.current_symbols:
-            if symbol in demo_data:
-                symbol_data = demo_data[symbol]
-                figure = trading_charts.create_candlestick_chart(
-                    symbol_data, f"{symbol} - Demo Data", volume=True
-                )
-                st.plotly_chart(figure, use_container_width=True, key=f"demo_{symbol}")
+            # Generate sample data for this symbol
+            symbol_data = trading_charts.generate_sample_data(
+                symbol=symbol,
+                days=30
+            )
+
+            figure = trading_charts.create_candlestick_chart(
+                symbol_data, f"{symbol} - Demo Data", volume=True
+            )
+            st.plotly_chart(figure, use_container_width=True, key=f"demo_{symbol}")
 
     def _render_performance_metrics(self):
         """Render performance monitoring dashboard."""

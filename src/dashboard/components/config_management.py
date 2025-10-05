@@ -528,7 +528,9 @@ def render_backup_restore():
                     continue
 
             if backup_data:
-                st.dataframe(backup_data[["Name", "Version", "Size (KB)", "Created"]], use_container_width=True)
+                import pandas as pd
+                backup_df = pd.DataFrame(backup_data)
+                st.dataframe(backup_df[["Name", "Version", "Size (KB)", "Created"]], use_container_width=True)
 
                 # Restore section
                 st.markdown("---")

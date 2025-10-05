@@ -295,3 +295,7 @@ def show_overview():
     """,
         unsafe_allow_html=True,
     )
+
+# Execute page content
+if __name__ == '__main__' or True:
+    show_overview()

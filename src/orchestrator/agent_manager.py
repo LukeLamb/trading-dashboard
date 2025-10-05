@@ -86,7 +86,8 @@ class AgentManager:
             # Market Data Agent setup
             agent_configs = self.config_manager.get_all_agent_configs()
             market_data_config = agent_configs.get("market_data")
-            market_data_path = dashboard_dir.parent / "market_data_agent"
+            # Market data agent is inside the dashboard directory
+            market_data_path = dashboard_dir / "market_data_agent"
             
             if market_data_config:
                 self.agents["market_data"] = AgentInfo(
@@ -564,6 +565,38 @@ class AgentManager:
         }
 
         return summary
+
+    def get_resource_metrics(self, agent_name: str) -> Optional[ResourceMetrics]:
+        """
+        Get resource metrics for a specific agent.
+
+        Args:
+            agent_name: Name of the agent
+
+        Returns:
+            ResourceMetrics object or None if agent doesn't exist
+        """
+        if agent_name not in self.agents:
+            return None
+
+        agent = self.agents[agent_name]
+
+        # Update metrics if agent is running
+        if agent.status == AgentStatus.RUNNING and agent.pid:
+            try:
+                process = psutil.Process(agent.pid)
+                agent.resource_metrics.cpu_percent = process.cpu_percent(interval=0.1)
+                mem_info = process.memory_info()
+                agent.resource_metrics.memory_mb = mem_info.rss / (1024 * 1024)
+                agent.resource_metrics.memory_percent = process.memory_percent()
+
+                if agent.start_time:
+                    agent.resource_metrics.uptime_seconds = time.time() - agent.start_time
+            except (psutil.NoSuchProcess, psutil.AccessDenied):
+                # Process may have died or we don't have permissions
+                pass
+
+        return agent.resource_metrics
 
     def get_health_score(self, agent_name: str) -> Optional[float]:
         """
