@@ -258,8 +258,13 @@ def main():
         # Render header
         render_header()
 
-        # Main content is now handled by Streamlit's page router
-        # Each page in pages/ folder renders itself
+        # Main content: Show overview page content when on main page
+        # Streamlit's page router handles other pages automatically
+        try:
+            overview.show_overview()
+        except Exception as e:
+            logger.error(f"Page loading error: {e}")
+            st.error("Error loading page content. Please check the logs.")
 
         # Render footer
         render_footer()

@@ -6,7 +6,7 @@ in the Trading Dashboard application.
 """
 
 import streamlit as st
-from ..components.error_dashboard import render_error_dashboard
+from src.dashboard.components.error_dashboard import render_error_dashboard
 
 
 def show():

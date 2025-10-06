@@ -131,7 +131,7 @@ def show_overview():
                     )
 
                 # Quick link to alerts page
-                if st.button("🚨 Go to Alerts Page", type="secondary"):
+                if st.button("🚨 Go to Alerts Page", type="secondary", key="go_to_alerts"):
                     st.session_state.current_page = "alerts"
                     st.rerun()
             else:
@@ -264,23 +264,23 @@ def show_overview():
     col1, col2, col3, col4 = st.columns(4)
 
     with col1:
-        if st.button("🔄 Refresh Data", use_container_width=True):
-            st.experimental_rerun()
+        if st.button("🔄 Refresh Data", use_container_width=True, key="refresh_data"):
+            st.rerun()
 
     with col2:
-        if st.button("⚙️ View Config", use_container_width=True):
+        if st.button("⚙️ View Config", use_container_width=True, key="view_config"):
             st.session_state.current_page = "settings"
-            st.experimental_rerun()
+            st.rerun()
 
     with col3:
-        if st.button("🤖 Manage Agents", use_container_width=True):
+        if st.button("🤖 Manage Agents", use_container_width=True, key="manage_agents"):
             st.session_state.current_page = "agents"
-            st.experimental_rerun()
+            st.rerun()
 
     with col4:
-        if st.button("📊 View Analytics", use_container_width=True):
+        if st.button("📊 View Analytics", use_container_width=True, key="view_analytics"):
             st.session_state.current_page = "analytics"
-            st.experimental_rerun()
+            st.rerun()
 
     # Recent Activity (Placeholder)
     st.markdown("---")

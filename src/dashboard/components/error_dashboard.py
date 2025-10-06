@@ -567,17 +567,36 @@ def render_error_status_indicator():
     _, col2, _ = st.columns([1, 2, 1])
 
     with col2:
+        # Determine color based on status
+        if status_text == "Critical":
+            color = "#EF4444"  # Red
+            bg_color = "rgba(239, 68, 68, 0.1)"
+        elif status_text == "Warning":
+            color = "#F59E0B"  # Amber
+            bg_color = "rgba(245, 158, 11, 0.1)"
+        else:
+            color = "#10B981"  # Green
+            bg_color = "rgba(16, 185, 129, 0.1)"
+
         st.markdown(
             f"""
-            <div style="
-                padding: 10px;
-                border-radius: 5px;
-                background-color: #f0f0f0;
+            <div class="glass-card" style="
+                padding: 1rem;
+                border-radius: 12px;
+                background: {bg_color};
+                backdrop-filter: blur(10px);
+                border: 1px solid rgba(255, 255, 255, 0.1);
                 text-align: center;
-                margin: 10px 0;
+                margin: 1rem 0;
+                box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
             ">
-                {status_color} <strong>System Health: {status_text}</strong><br>
-                <small>{recent_errors} errors (24h) | {degraded_features} degraded features</small>
+                <div style="font-size: 1.5rem; margin-bottom: 0.5rem;">{status_color}</div>
+                <div style="color: {color}; font-weight: 600; font-size: 1.1rem; margin-bottom: 0.25rem;">
+                    System Health: {status_text}
+                </div>
+                <div style="color: var(--text-secondary); font-size: 0.875rem;">
+                    {recent_errors} errors (24h) | {degraded_features} degraded features
+                </div>
             </div>
             """,
             unsafe_allow_html=True,

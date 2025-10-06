@@ -11,8 +11,8 @@ from typing import Dict, Any
 
 import streamlit as st
 
-from ..components.alert_dashboard import render_alert_dashboard
-from ..components.alerts import get_alert_manager, DEFAULT_ALERT_RULES
+from src.dashboard.components.alert_dashboard import render_alert_dashboard
+from src.dashboard.components.alerts import get_alert_manager, DEFAULT_ALERT_RULES
 
 # Configure logging
 logger = logging.getLogger(__name__)
