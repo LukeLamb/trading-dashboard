@@ -94,10 +94,13 @@ async def health_check():
         "message": db_health.get("message", "Database check failed")
     }
 
-# Import and include routers (will be added as we build them)
-# from api.routes import auth, users, characters, achievements, social, leaderboard
+# Import and include routers
+from api.routes import auth
 
-# app.include_router(auth.router, prefix="/api/auth", tags=["Authentication"])
+app.include_router(auth.router, prefix="/api/auth", tags=["Authentication"])
+
+# Additional routers (to be added):
+# from api.routes import users, characters, achievements, social, leaderboard
 # app.include_router(users.router, prefix="/api/users", tags=["Users"])
 # app.include_router(characters.router, prefix="/api/characters", tags=["Characters"])
 # app.include_router(achievements.router, prefix="/api/achievements", tags=["Achievements"])
