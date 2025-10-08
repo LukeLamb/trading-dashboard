@@ -1,11 +1,12 @@
 # Session Startup Guide - October 7, 2025
+
 **Continue Phase 1: Character & Profile System**
 
 ---
 
 ## 📋 Quick Status Summary
 
-**Phase 1 Progress: 30% Complete (3/10 steps)**
+### Phase 1 Progress: 30% Complete (3/10 steps)
 
 | What's Done | What's Next |
 |-------------|-------------|
@@ -19,15 +20,17 @@
 
 ## 🎯 Where We Left Off
 
-### Completed Yesterday (Oct 6):
+### Completed Yesterday (Oct 6)
 
 **Step 1: Database Setup ✅**
+
 - 9 database tables with schema
 - 63 achievements seeded (33,625 total XP)
 - Alembic migrations configured
 - Database connection with pooling
 
 **Step 2: Backend API (80% done)**
+
 - ✅ SQLAlchemy models (all 9 tables)
 - ✅ Pydantic schemas (validation)
 - ✅ Authentication system (JWT + bcrypt)
@@ -36,6 +39,7 @@
 - ✅ Character endpoints (4): list, info, change, my-character
 
 **12 Working API Endpoints:**
+
 1. POST `/api/auth/register` - Create user + character
 2. POST `/api/auth/login` - Login with JWT token
 3. POST `/api/auth/logout` - Logout (client invalidation)
@@ -49,14 +53,16 @@
 11. POST `/api/characters/change` - Change character (Level 5+)
 12. GET `/api/characters/my-character` - My character info
 
-### Still Need to Build:
+### Still Need to Build
 
 **Step 2 Remaining (20%):**
+
 - Achievement endpoints (list, user achievements, unlock)
 - Social endpoints (friends, leaderboard)
 - Password reset endpoints (request, verify, reset)
 
 **Steps 3-10 (70% of Phase 1):**
+
 - Character selection UI (Streamlit)
 - Profile creation/management pages
 - XP & progression system
@@ -72,20 +78,23 @@
 To get context, read these files in this order:
 
 ### 1. Project Status Documents
-```
+
+```bash
 docs/implementation-phases/phase-1-character-profile-system.md
 docs/implementation-phases/2025-10-06-phase1-step1-complete.md
 ```
 
 ### 2. Database Layer
-```
+
+```bash
 src/database/schema.sql
 src/database/connection.py
 src/database/README.md
 ```
 
 ### 3. API Layer (Models)
-```
+
+```bash
 src/api/models/__init__.py
 src/api/models/user.py
 src/api/models/achievement.py
@@ -93,7 +102,8 @@ src/api/models/social.py
 ```
 
 ### 4. API Layer (Routes)
-```
+
+```bash
 src/api/main.py
 src/api/routes/auth.py
 src/api/routes/users.py
@@ -101,7 +111,8 @@ src/api/routes/characters.py
 ```
 
 ### 5. Schemas & Services
-```
+
+```bash
 src/api/schemas/user.py
 src/api/services/auth_service.py
 src/api/dependencies.py
@@ -112,6 +123,7 @@ src/api/dependencies.py
 ## 🚀 Recommended Next Steps (In Order)
 
 ### Option A: Finish Backend API First (Recommended)
+
 **Time Estimate:** 2-3 hours
 
 1. **Create Achievement Endpoints** (~45 min)
@@ -142,6 +154,7 @@ src/api/dependencies.py
 **Then commit:** "feat(phase1): Complete Backend API - Step 2 DONE ✅"
 
 ### Option B: Jump to Frontend (If Prefer Visual Progress)
+
 **Time Estimate:** 3-4 hours
 
 1. **Create Character Selection Page** (Streamlit)
@@ -152,7 +165,8 @@ src/api/dependencies.py
 
 ## 🔧 Technical Setup Needed Tomorrow
 
-### Before Starting:
+### Before Starting
+
 ```bash
 # 1. Activate virtual environment
 cd c:\Users\infob\Desktop\Agents\trading-dashboard
@@ -169,7 +183,8 @@ python -m uvicorn src.api.main:app --reload --port 8000
 # Then visit: http://localhost:8000/api/docs
 ```
 
-### Database Setup (If Not Already Done):
+### Database Setup (If Not Already Done)
+
 ```bash
 # Create PostgreSQL database
 psql -U postgres
@@ -255,6 +270,7 @@ CHARACTER_CHANGE_COOLDOWN_DAYS=30
 ## 🔍 Useful Commands Reference
 
 ### Git
+
 ```bash
 git status                          # Check what's changed
 git log --oneline -5               # Last 5 commits
@@ -262,6 +278,7 @@ git diff src/api/                  # See API changes
 ```
 
 ### API Testing
+
 ```bash
 # Start FastAPI server
 cd src/api
@@ -276,6 +293,7 @@ curl http://localhost:8000/api/characters/list
 ```
 
 ### Database
+
 ```bash
 # Connect to database
 psql -U postgres -d trading_game
@@ -287,6 +305,7 @@ SELECT * FROM user_profiles;
 ```
 
 ### Streamlit Dashboard (Old - Still Works)
+
 ```bash
 python -m streamlit run src/dashboard/main.py --server.port=8501
 ```
@@ -296,12 +315,14 @@ python -m streamlit run src/dashboard/main.py --server.port=8501
 ## 🎯 Success Criteria for Tomorrow
 
 **Minimum Goal (2-3 hours):**
+
 - ✅ Complete remaining API endpoints (achievements, social, password reset)
 - ✅ Step 2 marked as 100% complete
 - ✅ All endpoints tested in /api/docs
 - ✅ Commit and push to GitHub
 
 **Stretch Goal (4-5 hours):**
+
 - ✅ Minimum goal above
 - ✅ Start Step 3: Character Selection UI
 - ✅ Create registration page in Streamlit
@@ -312,39 +333,46 @@ python -m streamlit run src/dashboard/main.py --server.port=8501
 ## 📞 API Endpoints Quick Reference
 
 ### Auth (4 endpoints) ✅
+
 - POST `/api/auth/register`
 - POST `/api/auth/login`
 - POST `/api/auth/logout`
 - GET `/api/auth/me`
 
 ### Users (4 endpoints) ✅
+
 - GET `/api/users/profile`
 - PUT `/api/users/profile`
 - DELETE `/api/users/account`
 - GET `/api/users/stats`
 
 ### Characters (4 endpoints) ✅
+
 - GET `/api/characters/list`
 - GET `/api/characters/info/{type}`
 - POST `/api/characters/change`
 - GET `/api/characters/my-character`
 
 ### Achievements (TO BUILD) ⏳
+
 - GET `/api/achievements`
 - GET `/api/achievements/user`
 - POST `/api/achievements/unlock`
 
 ### Social (TO BUILD) ⏳
+
 - POST `/api/social/friend-request`
 - PUT `/api/social/friend-request/{id}/accept`
 - DELETE `/api/social/friend/{id}`
 - GET `/api/social/friends`
 
 ### Leaderboard (TO BUILD) ⏳
+
 - GET `/api/leaderboard/overall`
 - GET `/api/leaderboard/character/{type}`
 
 ### Password Reset (TO BUILD) ⏳
+
 - POST `/api/auth/forgot-password`
 - POST `/api/auth/reset-password`
 
@@ -353,6 +381,7 @@ python -m streamlit run src/dashboard/main.py --server.port=8501
 ## 🏆 What We Accomplished Today
 
 **Major Milestones:**
+
 - ✅ Complete database infrastructure (9 tables, migrations, seeds)
 - ✅ Full authentication system (JWT, bcrypt, 4 endpoints)
 - ✅ Character system (5 archetypes with stats and bonuses)
@@ -379,6 +408,7 @@ python -m streamlit run src/dashboard/main.py --server.port=8501
 ## 📚 Additional Context Files (Optional)
 
 If you need more context:
+
 - `docs/design/REVISED-STRATEGY-Oct6.md` - Game strategy
 - `docs/design/trading-game-master-plan-v1-backup.md` - Original plan
 - `docs/guides/bolero.md` - Broker integration info

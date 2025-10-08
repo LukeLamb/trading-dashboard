@@ -12,7 +12,19 @@ project_root = Path(__file__).parent.parent.parent
 sys.path.insert(0, str(project_root))
 
 # Import pages
-from src.dashboard.pages import character_selection, register, login, profile
+from src.dashboard.pages import (
+    character_selection,
+    register,
+    login,
+    profile,
+    edit_profile
+)
+
+# Import additional pages (will be created)
+try:
+    from src.dashboard.pages import achievements, friends, leaderboard, xp_history
+except ImportError:
+    achievements = friends = leaderboard = xp_history = None
 
 
 def main():
@@ -43,6 +55,21 @@ def main():
 
     elif current_page == "profile":
         profile.show_profile()
+
+    elif current_page == "edit_profile":
+        edit_profile.show_edit_profile()
+
+    elif current_page == "achievements" and achievements:
+        achievements.show_achievements()
+
+    elif current_page == "friends" and friends:
+        friends.show_friends()
+
+    elif current_page == "leaderboard" and leaderboard:
+        leaderboard.show_leaderboard()
+
+    elif current_page == "xp_history" and xp_history:
+        xp_history.show_xp_history()
 
     else:
         st.error(f"Unknown page: {current_page}")

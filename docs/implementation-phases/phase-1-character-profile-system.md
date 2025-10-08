@@ -41,6 +41,7 @@
 **All 23 API endpoints operational:**
 
 **Auth Routes (6 endpoints):**
+
 - POST `/api/auth/register` - Create user + character
 - POST `/api/auth/login` - JWT authentication
 - POST `/api/auth/logout` - Client-side invalidation
@@ -49,23 +50,28 @@
 - POST `/api/auth/reset-password` - Complete password reset
 
 **User Routes (4 endpoints):**
+
 - GET `/api/users/profile` - Get profile
+
 - PUT `/api/users/profile` - Update profile (display name, bio, avatar)
 - DELETE `/api/users/account` - Soft delete (deactivate)
 - GET `/api/users/stats` - XP, level, achievements stats
 
 **Character Routes (4 endpoints):**
+
 - GET `/api/characters/list` - All 5 character types with bonuses
 - GET `/api/characters/info/{type}` - Single character details
 - POST `/api/characters/change` - Change character (Level 5+ only)
 - GET `/api/characters/my-character` - Current user's character
 
 **Achievement Routes (3 endpoints):**
+
 - GET `/api/achievements` - List all 63 achievements
 - GET `/api/achievements/user` - User's progress (completed + in-progress)
 - POST `/api/achievements/unlock` - Unlock + award XP + level check
 
 **Social Routes (4 endpoints):**
+
 - POST `/api/social/friend-request` - Send friend request
 - PUT `/api/social/friend-request/{id}/accept` - Accept request
 - DELETE `/api/social/friend/{username}` - Remove friend
@@ -73,11 +79,13 @@
 - GET `/api/social/friend-requests` - Sent + received requests
 
 **Leaderboard Routes (3 endpoints):**
+
 - GET `/api/leaderboard/overall` - Overall rankings by total XP
 - GET `/api/leaderboard/character/{type}` - Character-specific rankings
 - GET `/api/leaderboard/my-rank` - User's rank + percentiles
 
 **Technical Implementation:**
+
 - SQLAlchemy models for all 9 tables
 - Pydantic schemas for validation
 - JWT authentication with bcrypt password hashing

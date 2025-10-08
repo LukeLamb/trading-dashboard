@@ -171,15 +171,18 @@ def show_profile():
 
     with col1:
         if st.button("📚 View Achievements", use_container_width=True):
-            st.info("Achievements page coming soon!")
+            st.session_state.page = "achievements"
+            st.rerun()
 
     with col2:
         if st.button("🏆 Leaderboard", use_container_width=True):
-            st.info("Leaderboard page coming soon!")
+            st.session_state.page = "leaderboard"
+            st.rerun()
 
     with col3:
         if st.button("⚙️ Edit Profile", use_container_width=True):
-            st.info("Profile editing coming soon!")
+            st.session_state.page = "edit_profile"
+            st.rerun()
 
     with col4:
         if st.button("🚪 Logout", use_container_width=True, type="secondary"):
