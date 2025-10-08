@@ -90,6 +90,23 @@ def decode_access_token(token: str) -> Optional[dict]:
         return None
 
 
+def verify_access_token(token: str) -> dict:
+    """
+    Verify a JWT access token and return payload
+
+    Args:
+        token: JWT token string
+
+    Returns:
+        Decoded token payload
+
+    Raises:
+        JWTError: If token is invalid or expired
+    """
+    payload = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
+    return payload
+
+
 def get_token_expiry_seconds() -> int:
     """
     Get token expiry time in seconds

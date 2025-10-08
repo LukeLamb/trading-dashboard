@@ -95,17 +95,14 @@ async def health_check():
     }
 
 # Import and include routers
-from api.routes import auth, users, characters
+from api.routes import auth, users, characters, achievements, social, leaderboard
 
 app.include_router(auth.router, prefix="/api/auth", tags=["Authentication"])
 app.include_router(users.router, prefix="/api/users", tags=["Users"])
 app.include_router(characters.router, prefix="/api/characters", tags=["Characters"])
-
-# Additional routers (to be added):
-# from api.routes import achievements, social, leaderboard
-# app.include_router(achievements.router, prefix="/api/achievements", tags=["Achievements"])
-# app.include_router(social.router, prefix="/api/social", tags=["Social"])
-# app.include_router(leaderboard.router, prefix="/api/leaderboard", tags=["Leaderboard"])
+app.include_router(achievements.router, prefix="/api/achievements", tags=["Achievements"])
+app.include_router(social.router, prefix="/api/social", tags=["Social"])
+app.include_router(leaderboard.router, prefix="/api/leaderboard", tags=["Leaderboard"])
 
 if __name__ == "__main__":
     import uvicorn

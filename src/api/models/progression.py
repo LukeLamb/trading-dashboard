@@ -24,7 +24,7 @@ class UserProgression(Base):
     xp_gained = Column(Integer, nullable=False)
     xp_source = Column(String(100), nullable=False, index=True)
     timestamp = Column(DateTime(timezone=True), server_default=func.now(), index=True)
-    metadata = Column(JSONB)
+    extra_data = Column(JSONB)  # Renamed from 'metadata' (reserved by SQLAlchemy)
 
     # Relationships
     user = relationship("User", back_populates="progression")
