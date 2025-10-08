@@ -1,9 +1,9 @@
 # Phase 1: Character & Profile System
 
 **Timeline:** Weeks 1-2 (14 days)
-**Status:** 🔄 IN PROGRESS - Day 1 Complete
+**Status:** 🔄 IN PROGRESS - Day 2 Complete
 **Started:** October 6, 2025
-**Current Progress:** 4/10 steps complete (40%)
+**Current Progress:** 2/10 steps complete (40%)
 
 ---
 
@@ -12,8 +12,8 @@
 | Step | Status | Completion |
 |------|--------|------------|
 | Step 1: Database Setup | ✅ COMPLETE | 100% |
-| Step 2: Backend API Endpoints | 🔄 IN PROGRESS | 60% |
-| Step 3: Character Selection UI | ⏳ Pending | 0% |
+| Step 2: Backend API Endpoints | ✅ COMPLETE | 100% |
+| Step 3: Character Selection UI | 🔄 STARTING NOW | 0% |
 | Step 4: Profile Creation & Management | ⏳ Pending | 0% |
 | Step 5: XP & Progression System | ⏳ Pending | 0% |
 | Step 6: Achievement System | ⏳ Pending | 0% |
@@ -22,13 +22,13 @@
 | Step 9: Onboarding Flow | ⏳ Pending | 0% |
 | Step 10: Integration & Testing | ⏳ Pending | 0% |
 
-**Overall Phase 1 Progress:** 30% Complete
+**Overall Phase 1 Progress:** 40% Complete
 
 ---
 
-## 🎯 Today's Completed Work (October 6, 2025)
+## 🎯 Completed Work
 
-### ✅ Step 1: Database Setup (100% Complete)
+### ✅ Step 1: Database Setup (100% Complete) - Oct 6
 
 - Database schema with 9 tables
 - Alembic migrations configured
@@ -36,24 +36,54 @@
 - Connection pooling and health checks
 - Comprehensive documentation
 
-### ✅ Step 2: Backend API (60% Complete)
+### ✅ Step 2: Backend API (100% Complete) - Oct 6-8
 
-**Completed:**
+**All 23 API endpoints operational:**
 
+**Auth Routes (6 endpoints):**
+- POST `/api/auth/register` - Create user + character
+- POST `/api/auth/login` - JWT authentication
+- POST `/api/auth/logout` - Client-side invalidation
+- GET `/api/auth/me` - Current user info
+- POST `/api/auth/forgot-password` - Request reset token
+- POST `/api/auth/reset-password` - Complete password reset
+
+**User Routes (4 endpoints):**
+- GET `/api/users/profile` - Get profile
+- PUT `/api/users/profile` - Update profile (display name, bio, avatar)
+- DELETE `/api/users/account` - Soft delete (deactivate)
+- GET `/api/users/stats` - XP, level, achievements stats
+
+**Character Routes (4 endpoints):**
+- GET `/api/characters/list` - All 5 character types with bonuses
+- GET `/api/characters/info/{type}` - Single character details
+- POST `/api/characters/change` - Change character (Level 5+ only)
+- GET `/api/characters/my-character` - Current user's character
+
+**Achievement Routes (3 endpoints):**
+- GET `/api/achievements` - List all 63 achievements
+- GET `/api/achievements/user` - User's progress (completed + in-progress)
+- POST `/api/achievements/unlock` - Unlock + award XP + level check
+
+**Social Routes (4 endpoints):**
+- POST `/api/social/friend-request` - Send friend request
+- PUT `/api/social/friend-request/{id}/accept` - Accept request
+- DELETE `/api/social/friend/{username}` - Remove friend
+- GET `/api/social/friends` - Friends list with profiles
+- GET `/api/social/friend-requests` - Sent + received requests
+
+**Leaderboard Routes (3 endpoints):**
+- GET `/api/leaderboard/overall` - Overall rankings by total XP
+- GET `/api/leaderboard/character/{type}` - Character-specific rankings
+- GET `/api/leaderboard/my-rank` - User's rank + percentiles
+
+**Technical Implementation:**
 - SQLAlchemy models for all 9 tables
-- Pydantic schemas for request/response validation
-- Authentication service (JWT + bcrypt)
-- Auth endpoints: register, login, logout, /me
-- FastAPI dependencies (get_current_user)
-
-**In Progress:**
-
-- User profile endpoints
-- Character endpoints
-- XP/progression endpoints
-- Achievement endpoints
-- Social features endpoints
-- Password reset endpoints
+- Pydantic schemas for validation
+- JWT authentication with bcrypt password hashing
+- FastAPI dependencies (get_current_user, get_current_user_profile)
+- Proper error handling and logging
+- XP awarding logic with level-up calculations
 
 ---
 
