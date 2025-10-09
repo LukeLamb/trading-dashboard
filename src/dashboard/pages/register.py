@@ -159,7 +159,7 @@ def show_registration():
             test_data = {
                 "username": f"dev_user_{rand_id}",
                 "email": f"dev{rand_id}@test.com",
-                "password": "testpass123",
+                "password": "TestPass123!",
                 "display_name": f"Dev User {rand_id}",
                 "character_type": character_type,
                 "bio": f"Test {character_type} user"
@@ -176,7 +176,7 @@ def show_registration():
                     data = response.json()
                     st.session_state.user = data.get("user", {})
                     st.session_state.profile = data.get("profile", {})
-                    st.session_state.token = data.get("token", "")
+                    st.session_state.token = data.get("token", {}).get("access_token")
                     st.session_state.authenticated = True
                     st.success(f"✅ Dev mode: Created {test_data['username']}!")
                     st.session_state.page = "profile"

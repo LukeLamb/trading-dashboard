@@ -9,6 +9,10 @@ from fastapi.responses import JSONResponse
 import logging
 import os
 from contextlib import asynccontextmanager
+from dotenv import load_dotenv
+
+# Load environment variables from .env file
+load_dotenv()
 
 # Import database connection
 import sys

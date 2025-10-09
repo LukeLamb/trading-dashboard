@@ -279,7 +279,8 @@ def show_lessons():
         st.error(f"❌ {lessons_data}")
         return
 
-    lessons = lessons_data.get("lessons", [])
+    # API returns list directly, not wrapped in dict
+    lessons = lessons_data if isinstance(lessons_data, list) else []
 
     if not lessons:
         st.info("📭 No lessons found matching your filters")
@@ -337,7 +338,14 @@ def show_lessons():
         # Display lesson cards
         for lesson in module_lessons:
             card_html, is_locked = render_lesson_card(lesson, user_progress)
-            st.markdown(card_html, unsafe_allow_html=True)
+
+            # Write HTML directly using components for proper rendering
+            import streamlit.components.v1 as components
+            components.html(f"""
+                <div style="width: 100%;">
+                    {card_html}
+                </div>
+            """, height=180, scrolling=False)
 
             # Button to view lesson
             if not is_locked:
