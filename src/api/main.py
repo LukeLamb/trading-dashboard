@@ -96,6 +96,8 @@ async def health_check():
 
 # Import and include routers
 from api.routes import auth, users, characters, achievements, social, leaderboard
+# Phase 2: Educational Content
+from api.routes import lessons, quizzes
 
 app.include_router(auth.router, prefix="/api/auth", tags=["Authentication"])
 app.include_router(users.router, prefix="/api/users", tags=["Users"])
@@ -103,6 +105,9 @@ app.include_router(characters.router, prefix="/api/characters", tags=["Character
 app.include_router(achievements.router, prefix="/api/achievements", tags=["Achievements"])
 app.include_router(social.router, prefix="/api/social", tags=["Social"])
 app.include_router(leaderboard.router, prefix="/api/leaderboard", tags=["Leaderboard"])
+# Phase 2: Educational Content routes
+app.include_router(lessons.router, prefix="/api", tags=["Lessons"])
+app.include_router(quizzes.router, prefix="/api", tags=["Quizzes"])
 
 if __name__ == "__main__":
     import uvicorn

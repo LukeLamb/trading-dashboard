@@ -38,6 +38,10 @@ class User(Base):
     )
     password_reset_tokens = relationship("PasswordResetToken", back_populates="user", cascade="all, delete-orphan")
 
+    # Phase 2: Educational Content relationships
+    user_lessons = relationship("UserLesson", back_populates="user", cascade="all, delete-orphan")
+    lesson_bookmarks = relationship("LessonBookmark", back_populates="user", cascade="all, delete-orphan")
+
     __table_args__ = (
         CheckConstraint("char_length(username) >= 3", name="username_length"),
         CheckConstraint(
