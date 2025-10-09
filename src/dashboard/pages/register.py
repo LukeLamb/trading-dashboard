@@ -153,24 +153,38 @@ def show_registration():
     with st.expander("🔧 Developer Mode", expanded=False):
         st.warning("⚠️ Development Only - Remove before production!")
         if st.button("⚡ Skip Registration (Dev Mode)", type="secondary", width="stretch"):
-            # Create mock user data for testing
-            st.session_state.user = {
-                "id": 1,
-                "username": "dev_user",
-                "email": "dev@test.com",
-                "display_name": "Dev User"
-            }
-            st.session_state.profile = {
+            # Register a real test user via API
+            import random
+            rand_id = random.randint(1000, 9999)
+            test_data = {
+                "username": f"dev_user_{rand_id}",
+                "email": f"dev{rand_id}@test.com",
+                "password": "testpass123",
+                "display_name": f"Dev User {rand_id}",
                 "character_type": character_type,
-                "bio": f"Test {character_type} user",
-                "level": 1,
-                "xp": 0
+                "bio": f"Test {character_type} user"
             }
-            st.session_state.token = "dev_token_12345"
-            st.session_state.authenticated = True
-            st.success("✅ Dev mode: Skipped to profile!")
-            st.session_state.page = "profile"
-            st.rerun()
+
+            try:
+                response = requests.post(
+                    f"{API_BASE_URL}/api/auth/register",
+                    json=test_data,
+                    timeout=5
+                )
+
+                if response.status_code in [200, 201]:
+                    data = response.json()
+                    st.session_state.user = data.get("user", {})
+                    st.session_state.profile = data.get("profile", {})
+                    st.session_state.token = data.get("token", "")
+                    st.session_state.authenticated = True
+                    st.success(f"✅ Dev mode: Created {test_data['username']}!")
+                    st.session_state.page = "profile"
+                    st.rerun()
+                else:
+                    st.error(f"❌ Dev mode failed: {response.status_code}")
+            except Exception as e:
+                st.error(f"❌ Dev mode error: {str(e)}")
 
     # Registration form
     with st.form("registration_form"):
