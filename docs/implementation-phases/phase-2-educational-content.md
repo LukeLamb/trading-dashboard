@@ -10,6 +10,7 @@
 ## 📊 Overview
 
 Phase 2 transforms the Trading Game into a comprehensive educational platform by adding:
+
 - 100 interactive lessons across 4 modules
 - Quiz system with XP rewards
 - Broker-specific education (Bolero)
@@ -32,31 +33,36 @@ Phase 2 transforms the Trading Game into a comprehensive educational platform by
 ## 📚 Content Structure
 
 ### Module 1: Trading Fundamentals (Lessons 1-15)
+
 **Estimated Time:** 5-7 hours to complete
 **Total XP Available:** 1,750 XP
 **Prerequisites:** None
 
-#### Lesson Plan:
+#### Lesson Plan
 
 **Lesson 1: What is Trading?** (100 XP)
+
 - Definition of trading vs investing
 - Different types of markets (stocks, forex, crypto)
 - How exchanges work
 - Quiz: 10 questions
 
 **Lesson 2: Market Participants** (100 XP)
+
 - Retail traders vs institutional traders
 - Market makers and brokers
 - Regulators and their role
 - Quiz: 10 questions
 
 **Lesson 3: Understanding Stocks** (150 XP)
+
 - What is a stock?
 - Stock ownership and dividends
 - Common vs preferred stock
 - Quiz: 15 questions
 
 **Lesson 4: Market Orders & Limit Orders** (150 XP)
+
 - Order types explained
 - When to use market orders
 - When to use limit orders
@@ -64,12 +70,14 @@ Phase 2 transforms the Trading Game into a comprehensive educational platform by
 - Quiz: 15 questions
 
 **Lesson 5: Reading Stock Charts** (200 XP)
+
 - Candlestick basics
 - Volume interpretation
 - Timeframes (1min, 5min, 1hr, 1day)
 - Quiz: 20 questions
 
 **Lessons 6-10: Technical Analysis Basics** (150 XP each)
+
 - Support and resistance
 - Trend lines
 - Moving averages (SMA, EMA)
@@ -77,6 +85,7 @@ Phase 2 transforms the Trading Game into a comprehensive educational platform by
 - MACD and signal lines
 
 **Lessons 11-15: Fundamental Analysis** (150 XP each)
+
 - Financial statements
 - P/E ratio and valuation
 - Company analysis
@@ -86,11 +95,13 @@ Phase 2 transforms the Trading Game into a comprehensive educational platform by
 ---
 
 ### Module 2: Broker Education - Bolero (Lessons 16-20)
+
 **Estimated Time:** 2-3 hours
 **Total XP Available:** 1,000 XP
 **Prerequisites:** Lessons 1-15 complete
 
 **Lesson 16: Introduction to Bolero** (200 XP)
+
 - Platform overview
 - Account types
 - Fee structure
@@ -98,6 +109,7 @@ Phase 2 transforms the Trading Game into a comprehensive educational platform by
 - Quiz: 20 questions
 
 **Lesson 17: Placing Your First Order on Bolero** (200 XP)
+
 - Step-by-step order placement
 - Order confirmation
 - Order tracking
@@ -106,6 +118,7 @@ Phase 2 transforms the Trading Game into a comprehensive educational platform by
 - Quiz: 15 questions
 
 **Lesson 18: Bolero Portfolio Management** (200 XP)
+
 - Portfolio view
 - Performance tracking
 - Dividend management
@@ -113,6 +126,7 @@ Phase 2 transforms the Trading Game into a comprehensive educational platform by
 - Quiz: 15 questions
 
 **Lesson 19: Advanced Bolero Features** (200 XP)
+
 - Watchlists
 - Price alerts
 - Market news
@@ -120,6 +134,7 @@ Phase 2 transforms the Trading Game into a comprehensive educational platform by
 - Quiz: 15 questions
 
 **Lesson 20: Bolero Best Practices** (200 XP)
+
 - Cost optimization
 - Tax efficiency
 - Security best practices
@@ -129,11 +144,13 @@ Phase 2 transforms the Trading Game into a comprehensive educational platform by
 ---
 
 ### Module 3: Advanced Trading Strategies (Lessons 21-50)
+
 **Estimated Time:** 12-15 hours
 **Total XP Available:** 4,500 XP
 **Prerequisites:** Lessons 1-20 complete
 
-#### Topics Include:
+#### Topics Include
+
 - Swing trading strategies
 - Day trading techniques
 - Position sizing
@@ -154,11 +171,13 @@ Phase 2 transforms the Trading Game into a comprehensive educational platform by
 ---
 
 ### Module 4: Advanced Topics (Lessons 51-100)
+
 **Estimated Time:** 20-25 hours
 **Total XP Available:** 7,500 XP
 **Prerequisites:** Lessons 1-50 complete
 
-#### Topics Include:
+#### Topics Include
+
 - Options strategies (covered calls, puts, spreads)
 - Futures and commodities
 - Forex trading
@@ -184,21 +203,25 @@ Phase 2 transforms the Trading Game into a comprehensive educational platform by
 ### Quiz Types
 
 **Multiple Choice** (Most common)
+
 - 4 answer options
 - 1 correct answer
 - Instant feedback
 - Explanation provided
 
 **True/False**
+
 - Binary choice
 - Instant feedback with explanation
 
 **Fill in the Blank**
+
 - Text input
 - Case-insensitive matching
 - Partial credit available
 
 **Interactive Scenarios**
+
 - Real-world trading scenarios
 - Multiple decision points
 - Consequence-based learning
@@ -214,6 +237,7 @@ Phase 2 transforms the Trading Game into a comprehensive educational platform by
 | <70% | 0x | Retry Required ❌ |
 
 **Example:** Lesson 5 offers 200 XP
+
 - 100% score: 300 XP (200 * 1.5)
 - 90% score: 250 XP (200 * 1.25)
 - 80% score: 200 XP (200 * 1.0)
@@ -221,6 +245,7 @@ Phase 2 transforms the Trading Game into a comprehensive educational platform by
 - 60% score: 0 XP (must retry)
 
 ### Retake Policy
+
 - Unlimited retakes allowed
 - Must wait 1 hour between attempts
 - XP only awarded once (highest score counts)
@@ -233,24 +258,28 @@ Phase 2 transforms the Trading Game into a comprehensive educational platform by
 ### Agent Capabilities
 
 **Personalized Learning Path**
+
 - Analyzes user's character type
 - Recommends relevant lessons
 - Adjusts difficulty based on quiz performance
 - Suggests prerequisite lessons if struggling
 
 **Real-Time Assistance**
+
 - Chat interface on every lesson page
 - Answers questions about lesson content
 - Provides additional examples
 - Explains complex concepts
 
 **Progress Monitoring**
+
 - Tracks completion rate
 - Identifies knowledge gaps
 - Sends motivation messages
 - Celebrates milestones
 
 **Study Recommendations**
+
 - Optimal study schedule
 - Lesson duration estimates
 - Review recommendations
@@ -273,6 +302,7 @@ POST /api/advisor/explain - Request concept explanation
 ### New Tables
 
 **lessons**
+
 ```sql
 CREATE TABLE lessons (
     lesson_id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
@@ -298,6 +328,7 @@ CREATE INDEX idx_lessons_number ON lessons(lesson_number);
 ```
 
 **quizzes**
+
 ```sql
 CREATE TABLE quizzes (
     quiz_id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
@@ -309,6 +340,7 @@ CREATE TABLE quizzes (
 ```
 
 **user_lessons**
+
 ```sql
 CREATE TABLE user_lessons (
     user_lesson_id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
@@ -330,6 +362,7 @@ CREATE INDEX idx_user_lessons_status ON user_lessons(status);
 ```
 
 **lesson_bookmarks**
+
 ```sql
 CREATE TABLE lesson_bookmarks (
     bookmark_id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
@@ -347,6 +380,7 @@ CREATE TABLE lesson_bookmarks (
 ## 🎨 UI Components
 
 ### Lesson Page
+
 - Lesson content display (markdown + images)
 - Progress indicator (% of lesson read)
 - Reading time estimate
@@ -356,6 +390,7 @@ CREATE TABLE lesson_bookmarks (
 - Chat with Advisor Agent (sidebar)
 
 ### Quiz Page
+
 - Question display (1 at a time or all at once)
 - Answer selection
 - Submit button
@@ -365,6 +400,7 @@ CREATE TABLE lesson_bookmarks (
 - Retry button (if failed)
 
 ### Module Overview Page
+
 - Module description
 - Lesson cards (15-50 per module)
 - Progress bars for each lesson
@@ -373,6 +409,7 @@ CREATE TABLE lesson_bookmarks (
 - Certificate preview (for completed modules)
 
 ### My Learning Page
+
 - Overall progress (X/100 lessons complete)
 - Current streak (days of consecutive learning)
 - XP earned from lessons
@@ -386,6 +423,7 @@ CREATE TABLE lesson_bookmarks (
 ## 🏆 Achievements for Phase 2
 
 **Educational Milestones:**
+
 - "First Lesson" - Complete any lesson (50 XP)
 - "Perfect Score" - Get 100% on any quiz (100 XP)
 - "Module 1 Complete" - Finish all 15 lessons (500 XP)
@@ -404,24 +442,28 @@ CREATE TABLE lesson_bookmarks (
 ### Week 3 (Days 15-21)
 
 **Days 15-16: Database & Backend Setup**
+
 - Create lessons, quizzes, user_lessons tables
 - Seed first 20 lessons (Modules 1 & 2)
 - Build lesson API endpoints
 - Build quiz API endpoints
 
 **Days 17-18: Lesson UI**
+
 - Create lesson page component
 - Markdown renderer for lesson content
 - Progress tracking
 - Bookmark functionality
 
 **Days 19-20: Quiz UI**
+
 - Quiz page component
 - Answer submission
 - Score calculation
 - XP reward display
 
 **Day 21: Integration Testing**
+
 - Test complete lesson flow
 - Fix bugs
 - Performance optimization
@@ -429,16 +471,19 @@ CREATE TABLE lesson_bookmarks (
 ### Week 4 (Days 22-28)
 
 **Days 22-24: Content Creation**
+
 - Write lessons 21-50 (Module 3)
 - Create quizzes for lessons 21-50
 - Add images and diagrams
 
 **Days 25-26: Advisor Agent Integration**
+
 - Chat interface on lesson pages
 - Recommendation engine
 - Progress analysis
 
 **Days 27-28: Polish & Testing**
+
 - UI improvements
 - Bug fixes
 - User testing
@@ -446,16 +491,19 @@ CREATE TABLE lesson_bookmarks (
 ### Week 5 (Days 29-35)
 
 **Days 29-32: Advanced Content**
+
 - Write lessons 51-100 (Module 4)
 - Create quizzes for lessons 51-100
 - Advanced topic research
 
 **Days 33-34: Certificates & Badges**
+
 - Certificate generation
 - Module completion rewards
 - Share achievements feature
 
 **Day 35: Final Testing**
+
 - End-to-end testing
 - Performance optimization
 - Launch preparation
@@ -465,18 +513,21 @@ CREATE TABLE lesson_bookmarks (
 ## 🎯 Success Metrics
 
 **Week 3 Goals:**
+
 - ✅ Database schema implemented
 - ✅ First 20 lessons seeded
 - ✅ Lesson and quiz UI functional
 - ✅ Users can complete lessons and earn XP
 
 **Week 4 Goals:**
+
 - ✅ Lessons 21-50 available
 - ✅ Advisor Agent integrated
 - ✅ Progress tracking working
 - ✅ Quiz system stable
 
 **Week 5 Goals:**
+
 - ✅ All 100 lessons available
 - ✅ Certificates generated
 - ✅ All achievements unlockable
@@ -487,6 +538,7 @@ CREATE TABLE lesson_bookmarks (
 ## 🔗 API Endpoints to Build
 
 ### Lessons (6 endpoints)
+
 - GET `/api/lessons` - List all lessons (with filters)
 - GET `/api/lessons/{id}` - Get single lesson content
 - GET `/api/lessons/{id}/quiz` - Get lesson quiz
@@ -495,17 +547,20 @@ CREATE TABLE lesson_bookmarks (
 - POST `/api/lessons/{id}/bookmark` - Bookmark a lesson
 
 ### Quizzes (3 endpoints)
+
 - POST `/api/quizzes/{id}/submit` - Submit quiz answers
 - GET `/api/quizzes/{id}/results` - Get quiz results
 - GET `/api/user/quiz-history` - Get user's quiz history
 
 ### Progress (4 endpoints)
+
 - GET `/api/user/learning-progress` - Overall progress stats
 - GET `/api/user/lessons/completed` - List completed lessons
 - GET `/api/user/lessons/in-progress` - Current lessons
 - GET `/api/user/recommendations` - Personalized lesson recommendations
 
 ### Advisor Agent (4 endpoints)
+
 - POST `/api/advisor/chat` - Chat with advisor
 - GET `/api/advisor/recommendations` - Get study recommendations
 - GET `/api/advisor/analysis` - Get progress analysis
@@ -526,6 +581,7 @@ This should take most users from **Level 1-10** to **Level 25-30** depending on 
 ## 📝 Content Format
 
 ### Lesson JSON Structure
+
 ```json
 {
   "lesson_id": "uuid",
@@ -575,6 +631,7 @@ This should take most users from **Level 1-10** to **Level 25-30** depending on 
 Once Phase 2 is complete, we proceed to:
 
 **Phase 3: Paper Trading** (Weeks 6-8)
+
 - Mock portfolio management
 - Real-time market data
 - Trade execution simulator

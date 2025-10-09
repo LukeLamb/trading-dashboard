@@ -149,6 +149,29 @@ def show_registration():
     </div>
     """, unsafe_allow_html=True)
 
+    # DEV MODE: Quick bypass button
+    with st.expander("🔧 Developer Mode", expanded=False):
+        st.warning("⚠️ Development Only - Remove before production!")
+        if st.button("⚡ Skip Registration (Dev Mode)", type="secondary", width="stretch"):
+            # Create mock user data for testing
+            st.session_state.user = {
+                "id": 1,
+                "username": "dev_user",
+                "email": "dev@test.com",
+                "display_name": "Dev User"
+            }
+            st.session_state.profile = {
+                "character_type": character_type,
+                "bio": f"Test {character_type} user",
+                "level": 1,
+                "xp": 0
+            }
+            st.session_state.token = "dev_token_12345"
+            st.session_state.authenticated = True
+            st.success("✅ Dev mode: Skipped to profile!")
+            st.session_state.page = "profile"
+            st.rerun()
+
     # Registration form
     with st.form("registration_form"):
         col1, col2 = st.columns(2)
