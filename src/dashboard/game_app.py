@@ -20,11 +20,17 @@ from src.dashboard.pages import (
     edit_profile
 )
 
-# Import additional pages (will be created)
+# Import additional Phase 1 pages (will be created)
 try:
     from src.dashboard.pages import achievements, friends, leaderboard, xp_history
 except ImportError:
     achievements = friends = leaderboard = xp_history = None
+
+# Import Phase 2 lesson pages
+try:
+    from src.dashboard.pages import lessons, lesson_detail, quiz, my_learning
+except ImportError:
+    lessons = lesson_detail = quiz = my_learning = None
 
 
 def main():
@@ -70,6 +76,19 @@ def main():
 
     elif current_page == "xp_history" and xp_history:
         xp_history.show_xp_history()
+
+    # Phase 2: Educational Content Pages
+    elif current_page == "lessons" and lessons:
+        lessons.show_lessons()
+
+    elif current_page == "lesson_detail" and lesson_detail:
+        lesson_detail.show_lesson_detail()
+
+    elif current_page == "quiz" and quiz:
+        quiz.show_quiz()
+
+    elif current_page == "my_learning" and my_learning:
+        my_learning.show_my_learning()
 
     else:
         st.error(f"Unknown page: {current_page}")

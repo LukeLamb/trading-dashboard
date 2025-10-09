@@ -167,10 +167,28 @@ def show_profile():
     # Action buttons
     st.markdown("---")
 
+    # Phase 2: Learning section
+    st.markdown("### 📚 Learning")
+    col1, col2 = st.columns(2)
+
+    with col1:
+        if st.button("📖 Browse Lessons", use_container_width=True, type="primary"):
+            st.session_state.page = "lessons"
+            st.rerun()
+
+    with col2:
+        if st.button("📊 My Learning Progress", use_container_width=True):
+            st.session_state.page = "my_learning"
+            st.rerun()
+
+    st.markdown("---")
+
+    # Phase 1: Profile & Social section
+    st.markdown("### 🎮 Profile & Social")
     col1, col2, col3, col4 = st.columns(4)
 
     with col1:
-        if st.button("📚 View Achievements", use_container_width=True):
+        if st.button("🏆 Achievements", use_container_width=True):
             st.session_state.page = "achievements"
             st.rerun()
 
